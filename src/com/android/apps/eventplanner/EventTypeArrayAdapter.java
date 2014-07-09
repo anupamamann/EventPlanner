@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.apps.eventplanner.utils.Constants;
+import com.android.apps.eventplanner.utils.Functions;
 import com.myandroid.apps.eventplanner.R;
 
 public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
@@ -69,12 +70,11 @@ public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
 		}
 
 		tvEventDescription.setText(eventInfo.getEventDescription());
-		Resources resource = v.getContext().getResources();
-		int imageId = resource.getIdentifier(eventInfo.getImageSrc(), "drawable", v.getContext().getPackageName());
-		if(imageId == 0){ //set a default image
+		Drawable image = (Drawable)Functions.getResource(v, eventInfo.getImageSrc(), Constants.DRAWABLE);
+		if(image == null){ //set a default image
 			ivEvent.setImageResource(R.drawable.ic_launcher);
 		}else{
-			ivEvent.setImageDrawable(resource.getDrawable(imageId));
+			ivEvent.setImageDrawable(image);
 		}
 		ivEvent.setContentDescription(eventInfo.toString());
 		
