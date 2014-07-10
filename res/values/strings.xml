@@ -3,5 +3,7 @@
 
     <string name="app_name">EventWizard</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_event_recomendation">EventRecomendationActivity</string>
+    <string name="title_activity_category">CategoryActivity</string>
 
 </resources>
