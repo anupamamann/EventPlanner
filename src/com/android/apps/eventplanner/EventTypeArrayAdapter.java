@@ -13,9 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.utils.Constants;
 import com.android.apps.eventplanner.utils.Functions;
-import com.myandroid.apps.eventplanner.R;
+import com.android.apps.eventplanner.R;
 
 public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
 	
@@ -46,7 +47,7 @@ public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
 				String eventType = (String)v.getContentDescription();
 				
 				//call activity to generate event to-do list 
-				Intent intent = new Intent(getContext(), CategoryActivity.class);
+				Intent intent = new Intent(getContext(), TodoActivity.class);
 				intent.putExtra(Constants.EVENT_ID, eventType);
 				getContext().startActivity(intent);
 				
