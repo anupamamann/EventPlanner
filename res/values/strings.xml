@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">EventWizard</string>
+    <string name="app_name">PlanYourEvent</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_event_recomendation">EventRecomendationActivity</string>
-    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_todo">TodoActivity</string>
+    <string name="TodoHeading">Todo1</string>
+    <string name="TodoPreview">Preview1</string>
+    <string name="title_activity_create_new_event">CreateNewEventActivity</string>
+    <string name="title_activity_my_saved_events">MySavedEventsActivity</string>
 
 </resources>
