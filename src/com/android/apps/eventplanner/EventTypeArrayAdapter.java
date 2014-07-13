@@ -47,7 +47,7 @@ public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
 				String eventType = (String)v.getContentDescription();
 				
 				//call activity to generate event to-do list 
-				Intent intent = new Intent(getContext(), TodoActivity.class);
+				Intent intent = new Intent(getContext(), ItemDetailActivity.class);
 				intent.putExtra(Constants.EVENT_ID, eventType);
 				getContext().startActivity(intent);
 				
