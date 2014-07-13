@@ -23,7 +23,7 @@
         android:required="true" />
 
     <application
-		android:name="com.android.apps.eventplanner.EventApplication"
+        android:name="com.android.apps.eventplanner.EventApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_icon"
         android:label="@string/app_name"
@@ -31,22 +31,16 @@
         <activity
             android:name="com.android.apps.eventplanner.TodoActivity"
             android:label="@string/title_activity_todo">
+        </activity>
+        <activity android:name="com.android.apps.eventplanner.EventRecomendationActivity" >
             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.android.apps.eventplanner.CategoryActivity" >
         </activity>
 
-         <activity
-             android:name="com.android.apps.eventplanner.EventRecomendationActivity"
-             android:label="@string/app_name">
-             
-         </activity>
-         <activity
-             android:name="com.android.apps.eventplanner.CategoryActivity"
-             android:label="@string/title_activity_category">
-         </activity>
-   
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -66,6 +60,14 @@
         <activity
             android:name="com.android.apps.eventplanner.MySavedEventsActivity"
             android:label="@string/title_activity_my_saved_events" >
+        </activity>
+        <activity
+            android:name="com.android.apps.eventplanner.ItemDetailActivity"
+            android:label="@string/title_activity_item_detail" >
+        </activity>
+        <activity
+            android:name="com.android.apps.eventplanner.TestActivity"
+            android:label="@string/title_activity_test" >
         </activity>
     </application>
 
