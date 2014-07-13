@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,20 +16,28 @@ import android.widget.Toast;
 
 import com.android.apps.eventplanner.models.EventRecommendation;
 import com.android.apps.eventplanner.models.TodoListItem;
+import com.android.apps.eventplanner.utils.Constants.EventType;
 
 public class TodoActivity extends Activity {
 
 	ListView lvTodos;
 	TodoListArrayAdapter adapter;
 	List<TodoListItem> todos;
-	EventRecommendation reco; //get type from CategoryActivity
+	EventType eventType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_todo);
 		todos = new ArrayList<TodoListItem>();
-		todos.add(new TodoListItem("Mona","Chitnis"));
+		
+		//TODO get type from CategoryActivity and switch-case ladder
+		//example birthday
+		eventType = EventType.BIRTHDAY;  
+		todos.add(new TodoListItem(TodoListItem.Type.FOOD,"Chilli Chicken"));
+		todos.add(new TodoListItem(TodoListItem.Type.VENUE,"Lolapalooza"));
+		todos.add(new TodoListItem(TodoListItem.Type.THEME,"Tinkerbell"));
+		todos.add(new TodoListItem(TodoListItem.Type.MUSIC,"Lady Gaga"));
 		adapter = new TodoListArrayAdapter(this, todos);
 		lvTodos = (ListView) findViewById(R.id.lvTodos);
 		lvTodos.setAdapter(adapter);
@@ -37,9 +46,24 @@ public class TodoActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Toast.makeText(TodoActivity.this, "Clicked " + position,
+				TodoListItem listItem = adapter.getItem(position);
+				Toast.makeText(TodoActivity.this, "Clicked " + listItem.getHeading(),
 						Toast.LENGTH_SHORT).show();
-				
+				Intent i = null;
+				switch (listItem.getHeading()) {
+					case FOOD:
+						i = new Intent(TodoActivity.this, ItemDetailActivity.class); // temp
+						break;
+					case VENUE:
+						i = new Intent(TodoActivity.this, VenueActivity.class);
+						break;
+					case THEME:
+						i = new Intent(TodoActivity.this, ItemDetailActivity.class); // temp
+						break;
+					case MUSIC:
+						i = new Intent(TodoActivity.this, ItemDetailActivity.class); // temp
+				}
+				startActivityForResult(i, 50);
 			}
 			
 		});

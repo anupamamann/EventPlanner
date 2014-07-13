@@ -3,16 +3,26 @@ package com.android.apps.eventplanner.models;
 import android.widget.ImageView;
 
 public class TodoListItem {
-	private String heading;
+	private Type heading;
 	private String preview;
 	private ImageView status;
 	
-	public TodoListItem(String heading, String preview) {
+	public enum Type {
+		FOOD("Food"), VENUE("Venue"), THEME("Theme"), MUSIC("Music");
+		
+		private String type;
+		
+		private Type(String t) {
+			this.type = t;
+		}
+	}
+	
+	public TodoListItem(Type heading, String preview) {
 		this.heading = heading;
 		this.preview = preview;
 	}
 	
-	public String getHeading() {
+	public Type getHeading() {
 		return heading;
 	}
 	public String getPreview() {

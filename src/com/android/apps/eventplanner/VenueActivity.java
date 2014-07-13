@@ -1,7 +1,12 @@
 package com.android.apps.eventplanner;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
@@ -11,6 +16,12 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.apps.eventplanner.fragments.ListViewFragment;
+import com.android.apps.eventplanner.fragments.MapViewFragment;
+import com.android.apps.eventplanner.listeners.FragmentTabListener;
+import com.android.apps.eventplanner.models.TodoListItem.Type;
+import com.android.apps.eventplanner.models.Venue;
+import com.android.apps.eventplanner.utils.GoogleClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -20,165 +31,50 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class VenueActivity extends FragmentActivity implements
-		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+public class VenueActivity extends FragmentActivity  {
 
-	private SupportMapFragment mapFragment;
-	private GoogleMap map;
-	private LocationClient mLocationClient;
-	/*
-	 * Define a request code to send to Google Play services This code is
-	 * returned in Activity.onActivityResult
-	 */
-	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_venue);
-		mLocationClient = new LocationClient(this, this, this);
-		mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
-		if (mapFragment != null) {
-			map = mapFragment.getMap();
-			if (map != null) {
-				Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
-				map.setMyLocationEnabled(true);
-			} else {
-				Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
-			}
-		} else {
-			Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
-		}
+		
+		setupTabs();
 
 	}
 
-	/*
-	 * Called when the Activity becomes visible.
-	 */
-	@Override
-	protected void onStart() {
-		super.onStart();
-		// Connect the client.
-		if (isGooglePlayServicesAvailable()) {
-			mLocationClient.connect();
-		}
+	
+	private void setupTabs() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(true);
 
-	}
+		Tab tab1 = actionBar
+			.newTab()
+			.setText("Map View")
+			.setIcon(R.drawable.ic_tab_map)
+			.setTag("MapViewFragment")
+			.setTabListener(
+				new FragmentTabListener<MapViewFragment>(R.id.flContainer, this, "mapview",
+						MapViewFragment.class));
 
-	/*
-	 * Called when the Activity is no longer visible.
-	 */
-	@Override
-	protected void onStop() {
-		// Disconnecting the client invalidates it.
-		mLocationClient.disconnect();
-		super.onStop();
-	}
+		actionBar.addTab(tab1);
+		actionBar.selectTab(tab1);
 
-	/*
-	 * Handle results returned to the FragmentActivity by Google Play services
-	 */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// Decide what to do based on the original request code
-		switch (requestCode) {
+		Tab tab2 = actionBar
+			.newTab()
+			.setText("List View")
+			.setIcon(R.drawable.ic_tab_list)
+			.setTag("ListViewFragment")
+			.setTabListener(
+			    new FragmentTabListener<ListViewFragment>(R.id.flContainer, this, "listview",
+			    		ListViewFragment.class));
 
-		case CONNECTION_FAILURE_RESOLUTION_REQUEST:
-			/*
-			 * If the result code is Activity.RESULT_OK, try to connect again
-			 */
-			switch (resultCode) {
-			case Activity.RESULT_OK:
-				mLocationClient.connect();
-				break;
-			}
-
-		}
-	}
-
-	private boolean isGooglePlayServicesAvailable() {
-		// Check that Google Play services is available
-		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-		// If Google Play services is available
-		if (ConnectionResult.SUCCESS == resultCode) {
-			// In debug mode, log the status
-			Log.d("Location Updates", "Google Play services is available.");
-			return true;
-		} else {
-			// Get the error dialog from Google Play services
-			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-					CONNECTION_FAILURE_RESOLUTION_REQUEST);
-
-			// If Google Play services can provide an error dialog
-			if (errorDialog != null) {
-				// Create a new DialogFragment for the error dialog
-				ErrorDialogFragment errorFragment = new ErrorDialogFragment();
-				errorFragment.setDialog(errorDialog);
-				errorFragment.show(getSupportFragmentManager(), "Location Updates");
-			}
-
-			return false;
-		}
-	}
-
-	/*
-	 * Called by Location Services when the request to connect the client
-	 * finishes successfully. At this point, you can request the current
-	 * location or start periodic updates
-	 */
-	@Override
-	public void onConnected(Bundle dataBundle) {
-		// Display the connection status
-		Location location = mLocationClient.getLastLocation();
-		if (location != null) {
-			Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
-			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-			map.animateCamera(cameraUpdate);
-		} else {
-			Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	/*
-	 * Called by Location Services if the connection to the location client
-	 * drops because of an error.
-	 */
-	@Override
-	public void onDisconnected() {
-		// Display the connection status
-		Toast.makeText(this, "Disconnected. Please re-connect.", Toast.LENGTH_SHORT).show();
-	}
-
-	/*
-	 * Called by Location Services if the attempt to Location Services fails.
-	 */
-	@Override
-	public void onConnectionFailed(ConnectionResult connectionResult) {
-		/*
-		 * Google Play services can resolve some errors it detects. If the error
-		 * has a resolution, try sending an Intent to start a Google Play
-		 * services activity that can resolve error.
-		 */
-		if (connectionResult.hasResolution()) {
-			try {
-				// Start an Activity that tries to resolve the error
-				connectionResult.startResolutionForResult(this,
-						CONNECTION_FAILURE_RESOLUTION_REQUEST);
-				/*
-				 * Thrown if Google Play services canceled the original
-				 * PendingIntent
-				 */
-			} catch (IntentSender.SendIntentException e) {
-				// Log the error
-				e.printStackTrace();
-			}
-		} else {
-			Toast.makeText(getApplicationContext(),
-					"Sorry. Location services not available to you", Toast.LENGTH_LONG).show();
-		}
+		actionBar.addTab(tab2);
 	}
 
 	// Define a DialogFragment that displays the error dialog

@@ -28,7 +28,7 @@ public class TodoListArrayAdapter extends ArrayAdapter<TodoListItem> {
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_todo, parent, false);
 		}
 		setupViews(convertView);
-		tvTodoHeading.setText(t.getHeading());
+		tvTodoHeading.setText(t.getHeading().name());
 		tvTodoPreview.setText(t.getPreview());
 		//flStatus.setBackground(R.drawable.ic_icon);
 		return convertView;

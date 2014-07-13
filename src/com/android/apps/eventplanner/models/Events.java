@@ -2,20 +2,19 @@ package com.android.apps.eventplanner.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import com.android.apps.eventplanner.utils.Constants.EventType;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-
-
 
 /**
  * Represents a Table in Parse
  * Get methods retrieves data from Parse Response
  * 
  */
-
 
 @ParseClassName("Events")
 public class Events extends ParseObject implements Serializable{
@@ -24,6 +23,15 @@ public class Events extends ParseObject implements Serializable{
 	private String imageSrc;
 	private String eventDescription;
 	private int eventID;
+	private String name;
+	private EventType type;
+	private Date date;
+	private FoodMenu food;
+	private Theme theme;
+	private Venue venue;
+	private MusicPlaylist music;
+	private List<Guest> guests;
+	
 
 	public Events() {
 		// TODO Auto-generated constructor stub
@@ -67,21 +75,5 @@ public class Events extends ParseObject implements Serializable{
 	public static ParseQuery<Events> getQuery(){
 		return ParseQuery.getQuery(Events.class);
 	}
-	
-	public enum Type {
-		BIRTHDAY("Birthday"),
-		WEDDING("Wedding"),
-		BABY_SHOWER("Baby Shower"),
-		COCKTAIL("Cocktail"),
-		HALLOWEEN("Halloween");
-		
-		private String type;
-		
-		private Type(String type) {
-			this.type = type;
-		}
-	}
-	
-	
 
 }
