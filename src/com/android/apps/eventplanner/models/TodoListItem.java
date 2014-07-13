@@ -10,7 +10,6 @@ public class TodoListItem {
 	public TodoListItem(String heading, String preview) {
 		this.heading = heading;
 		this.preview = preview;
-		//this.status = status;
 	}
 	
 	public String getHeading() {
@@ -23,5 +22,7 @@ public class TodoListItem {
 		return status;
 	}
 	
-	
+	public void setStatus(ImageView v) {
+		this.status = v;
+	}
 }

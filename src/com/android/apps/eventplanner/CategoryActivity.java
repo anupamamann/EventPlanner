@@ -2,7 +2,6 @@ package com.android.apps.eventplanner;
 
 import com.android.apps.eventplanner.utils.Constants;
 import com.android.apps.eventplanner.R;
-import com.android.apps.eventplanner.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;

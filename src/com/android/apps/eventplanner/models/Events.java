@@ -68,6 +68,20 @@ public class Events extends ParseObject implements Serializable{
 		return ParseQuery.getQuery(Events.class);
 	}
 	
+	public enum Type {
+		BIRTHDAY("Birthday"),
+		WEDDING("Wedding"),
+		BABY_SHOWER("Baby Shower"),
+		COCKTAIL("Cocktail"),
+		HALLOWEEN("Halloween");
+		
+		private String type;
+		
+		private Type(String type) {
+			this.type = type;
+		}
+	}
+	
 	
 
 }

@@ -8,5 +8,7 @@
     <string name="TodoPreview">Preview1</string>
     <string name="title_activity_create_new_event">CreateNewEventActivity</string>
     <string name="title_activity_my_saved_events">MySavedEventsActivity</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_venue">VenueActivity</string>
 
 </resources>

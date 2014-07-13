@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.apps.eventplanner.models.EventRecommendation;
 import com.android.apps.eventplanner.models.TodoListItem;
 
 public class TodoActivity extends Activity {
@@ -20,6 +21,7 @@ public class TodoActivity extends Activity {
 	ListView lvTodos;
 	TodoListArrayAdapter adapter;
 	List<TodoListItem> todos;
+	EventRecommendation reco; //get type from CategoryActivity
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
