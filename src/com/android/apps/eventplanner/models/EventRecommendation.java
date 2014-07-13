@@ -2,33 +2,22 @@ package com.android.apps.eventplanner.models;
 
 import java.util.List;
 
+import com.android.apps.eventplanner.utils.Constants.EventType;
+
+
 public class EventRecommendation {
 	
-	private Type type;
+	private EventType type;
 	private List<Venue> venues;
 	private List<FoodMenu> foods;
 	private List<Theme> themes;
 	private List<MusicPlaylist> playlists;
 	
-	public enum Type {
-		BIRTHDAY("Birthday"),
-		WEDDING("Wedding"),
-		BABY_SHOWER("Baby Shower"),
-		COCKTAIL("Cocktail"),
-		HALLOWEEN("Halloween");
-		
-		private String type;
-		
-		private Type(String type) {
-			this.type = type;
-		}
-	}
-	
-	public EventRecommendation(Type t) {
+	public EventRecommendation(EventType t) {
 		this.type = t;
 	}
 	
-	public Type getType() {
+	public EventType getType() {
 		return type;
 	}
 

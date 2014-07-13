@@ -3,18 +3,21 @@ package com.android.apps.eventplanner.models;
 import java.net.URL;
 import java.util.List;
 
+import com.android.apps.eventplanner.utils.Constants;
+import com.android.apps.eventplanner.utils.Constants.ThemeType;
+
 public class Theme {
 	
 	private String name;
 	private List<Item> item;
-	private List<EventRecommendation.Type> eventType;
+	private List<Constants.EventType> eventType;
 
 	public class Item {
 		private String id;
 		private String name;
 		private float price;
 		private URL url; //amazon/e-bay
-		private Type type;
+		private ThemeType type;
 		
 		public String getId() {
 			return id;
@@ -28,20 +31,8 @@ public class Theme {
 		public URL getUrl() {
 			return url;
 		}
-		public Type getType() {
+		public ThemeType getType() {
 			return type;
-		}
-	}
-	
-	enum Type {
-		DECORATION("Decoration"),
-		COSTUME("Costume"),
-		CAKE_DESIGN("Cake Design");
-		
-		private String type;
-		
-		private Type(String type) {
-			this.type = type;
 		}
 	}
 	
@@ -53,7 +44,7 @@ public class Theme {
 		return item;
 	}
 
-	public List<EventRecommendation.Type> getEventType() {
+	public List<Constants.EventType> getEventType() {
 		return eventType;
 	}
 }
