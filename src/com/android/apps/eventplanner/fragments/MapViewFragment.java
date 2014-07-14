@@ -5,12 +5,12 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.android.apps.eventplanner.EventApplication;
 import com.android.apps.eventplanner.R;
 import com.android.apps.eventplanner.VenueActivity.ErrorDialogFragment;
+import com.android.apps.eventplanner.VenuePhotosDialog;
 import com.android.apps.eventplanner.models.TodoListItem.Type;
 import com.android.apps.eventplanner.models.Venue;
 import com.android.apps.eventplanner.utils.GoogleClient;
@@ -30,8 +31,10 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -42,7 +45,8 @@ public class MapViewFragment extends Fragment implements
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
 	private LocationClient mLocationClient;
-	View mapView;
+	private View mapView;
+	private FragmentActivity myContext;
 	
 	/*
 	 * Define a request code to send to Google Play services This code is
@@ -51,15 +55,24 @@ public class MapViewFragment extends Fragment implements
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	
 	@Override
+	public void onAttach(Activity activity) {
+		myContext = (FragmentActivity) activity;
+		super.onAttach(activity);
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		if (mapView == null)
+		if (mapView != null) {
+			ViewGroup parent = (ViewGroup) mapView.getParent();
+			parent.removeView(mapView);
+		}
+		else
 			mapView = inflater.inflate(R.layout.fragment_map_view, container, false);
 		return mapView;
 	}
@@ -67,9 +80,8 @@ public class MapViewFragment extends Fragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		fm = getActivity().getSupportFragmentManager();
-		Context context = getActivity();
-		mLocationClient = new LocationClient(context, this, this);
+		fm = myContext.getSupportFragmentManager();
+		mLocationClient = new LocationClient(myContext, this, this);
 		mapFragment = ((SupportMapFragment) fm.findFragmentById(R.id.map));
 		if (mapFragment != null) {
 			map = mapFragment.getMap();
@@ -82,6 +94,18 @@ public class MapViewFragment extends Fragment implements
 		} else {
 			Log.e("EVENT", "Error - Map Fragment was null!!");
 		}
+		
+		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+
+			@Override
+			public void onInfoWindowClick(Marker m) {
+				VenuePhotosDialog overlay = VenuePhotosDialog
+						.newInstance("Birthday Party Venue pics");
+				overlay.show(fm, "venue_pics");
+
+			}
+			
+		});
 	}
 	
 	/*
@@ -130,7 +154,7 @@ public class MapViewFragment extends Fragment implements
 
 	private boolean isGooglePlayServicesAvailable() {
 		// Check that Google Play services is available
-		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(myContext);
 		// If Google Play services is available
 		if (ConnectionResult.SUCCESS == resultCode) {
 			// In debug mode, log the status
@@ -138,7 +162,7 @@ public class MapViewFragment extends Fragment implements
 			return true;
 		} else {
 			// Get the error dialog from Google Play services
-			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(),
+			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, myContext,
 					CONNECTION_FAILURE_RESOLUTION_REQUEST);
 
 			// If Google Play services can provide an error dialog
@@ -197,7 +221,7 @@ public class MapViewFragment extends Fragment implements
 		if (connectionResult.hasResolution()) {
 			try {
 				// Start an Activity that tries to resolve the error
-				connectionResult.startResolutionForResult(getActivity(),
+				connectionResult.startResolutionForResult(myContext,
 						CONNECTION_FAILURE_RESOLUTION_REQUEST);
 				/*
 				 * Thrown if Google Play services canceled the original
@@ -215,8 +239,8 @@ public class MapViewFragment extends Fragment implements
 	private void setupMapMarkers(LatLng currentLocation) {
 		//display points on map
 		GoogleClient client = EventApplication.getClient();
-		client.getPlaces(Type.FOOD, "", currentLocation.latitude,
-				currentLocation.longitude, 1000, new JsonHttpResponseHandler() {
+		client.getPlaces(Type.FOOD, "birthday party", currentLocation.latitude,
+				currentLocation.longitude, 100000, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject json) {
 				JSONArray placesJsonResults = null;
@@ -228,6 +252,7 @@ public class MapViewFragment extends Fragment implements
 						map.addMarker(new MarkerOptions()
 		                .title(v.getName())
 		                .position(v.getLocation()));
+						
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -240,5 +265,5 @@ public class MapViewFragment extends Fragment implements
 			}
 		});
 	}
-	
+			
 }
