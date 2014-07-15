@@ -8,10 +8,18 @@ public class Constants {
 	public static final String Strings = "strings";
 	
 	public enum FoodType{
-		APPETIZER,
-		ENTREE,
-		DESSERT,
-		BEVERAGE;
+		APPETIZER("Appetizers"),
+		ENTREE("Entree"),
+		DESSERT("Dessert"),
+		BEVERAGE("Beverage");
+		
+		private String type;
+		private FoodType(String type) {
+			this.type = type;
+		}
+		public String getType(){
+			return type;
+		}
 	}
 	
 	public enum EventType {
