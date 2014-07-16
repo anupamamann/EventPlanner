@@ -52,7 +52,7 @@ public class TodoActivity extends Activity {
 				Intent i = null;
 				switch (listItem.getHeading()) {
 					case FOOD:
-						i = new Intent(TodoActivity.this, ItemDetailActivity.class); // temp
+						i = new Intent(TodoActivity.this, EventRecomendationActivity.class); // temp
 						break;
 					case VENUE:
 						i = new Intent(TodoActivity.this, VenueActivity.class);

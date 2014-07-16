@@ -106,6 +106,8 @@ public class MapViewFragment extends Fragment implements
 			}
 			
 		});
+		
+		//map.animateCamera( CameraUpdateFactory.zoomTo( 5.0f ) );  
 	}
 	
 	/*
@@ -190,7 +192,7 @@ public class MapViewFragment extends Fragment implements
 			Log.i("EVENT", "GPS location was found!");
 			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 			Log.i("EVENT", latLng.latitude + "," + latLng.longitude);
-			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 8);
 			map.animateCamera(cameraUpdate);
 			setupMapMarkers(latLng);
 		} else {

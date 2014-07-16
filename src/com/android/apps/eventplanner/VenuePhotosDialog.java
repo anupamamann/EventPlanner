@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.apps.eventplanner.utils.GoogleClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -56,34 +57,11 @@ public class VenuePhotosDialog extends DialogFragment {
 		lvVenuePics = (ListView) v.findViewById(R.id.lvVenuePics);
 		lvVenuePics.setAdapter(imageAdapter);
 		
-		getImages();
-		
-		this.set
+		GoogleClient gClient = EventApplication.getClient();
+		gClient.getImages(imageAdapter);
+		// TODO set dismiss on lose focus
 		return v;
 	}
 	
-	private void getImages() {
-		String url = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8&"
-				+ "&v=1.0&q=" + Uri.encode("Birthday hall");
-		
-		client.get(url, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(JSONObject response) {
-				JSONArray imageJsonResults = null;
-				imageAdapter.clear();
-				try {
-					imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
-					imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable t, JSONObject response) {
-				Log.e("EVENT", "Failure in Json Image results");
-			}
-		});
-	}
 	
 }
