@@ -8,6 +8,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/btnAddVenueList" >
     </ListView>
+
+	<Button
+	    android:id="@+id/btnAddVenueList"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignParentTop="true"
+	    android:layout_marginBottom="5dp"
+	    android:layout_marginTop="5dp"
+	    android:onClick="onAddVenueList"
+	    android:text="@string/add_to_event" />
+
 </RelativeLayout>

@@ -44,6 +44,13 @@ public class FoodMenuFragment extends Fragment {
 	TextView tvDescription;
 	
 	
+	public static FoodMenuFragment newInstance(int position, FoodMenu menu) {
+		FoodMenuFragment frag = new FoodMenuFragment();
+		Bundle args = new Bundle();
+		//TODO
+		frag.setArguments(args);
+		return frag;
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

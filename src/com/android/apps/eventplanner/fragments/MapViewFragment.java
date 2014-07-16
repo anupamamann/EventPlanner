@@ -1,5 +1,8 @@
 package com.android.apps.eventplanner.fragments;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +24,7 @@ import com.android.apps.eventplanner.EventApplication;
 import com.android.apps.eventplanner.R;
 import com.android.apps.eventplanner.VenueActivity.ErrorDialogFragment;
 import com.android.apps.eventplanner.VenuePhotosDialog;
+import com.android.apps.eventplanner.VenuePhotosDialog.MapViewFragmentListener;
 import com.android.apps.eventplanner.models.TodoListItem.Type;
 import com.android.apps.eventplanner.models.Venue;
 import com.android.apps.eventplanner.utils.GoogleClient;
@@ -47,12 +51,14 @@ public class MapViewFragment extends Fragment implements
 	private LocationClient mLocationClient;
 	private View mapView;
 	private FragmentActivity myContext;
+	private Map<Venue, Marker> venueMarkerMap;
 	
 	/*
 	 * Define a request code to send to Google Play services This code is
 	 * returned in Activity.onActivityResult
 	 */
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+	
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -94,20 +100,23 @@ public class MapViewFragment extends Fragment implements
 		} else {
 			Log.e("EVENT", "Error - Map Fragment was null!!");
 		}
+		venueMarkerMap = new HashMap<Venue, Marker>();
 		
 		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 			@Override
 			public void onInfoWindowClick(Marker m) {
+				Venue venue = new Venue(m.getTitle(), "map-address", 20);
 				VenuePhotosDialog overlay = VenuePhotosDialog
-						.newInstance("Birthday Party Venue pics");
+						.newInstance(venue);
+				//MapViewFragmentListener listener = (MapViewFragmentListener) getActivity();
+				//listener.passVenue(venue);
 				overlay.show(fm, "venue_pics");
 
 			}
 			
 		});
 		
-		//map.animateCamera( CameraUpdateFactory.zoomTo( 5.0f ) );  
 	}
 	
 	/*

@@ -1,11 +1,12 @@
 package com.android.apps.eventplanner.models;
 
-import android.widget.ImageView;
+import com.android.apps.eventplanner.R;
 
 public class TodoListItem {
+	
 	private Type heading;
 	private String preview;
-	private ImageView status;
+	private int icon;
 	
 	public enum Type {
 		FOOD("Food"), VENUE("Venue"), THEME("Theme"), MUSIC("Music");
@@ -19,6 +20,19 @@ public class TodoListItem {
 	
 	public TodoListItem(Type heading, String preview) {
 		this.heading = heading;
+		switch (heading) {
+		case FOOD:
+			this.icon = R.drawable.ic_todo_food;
+			break;
+		case VENUE:
+			this.icon = R.drawable.ic_todo_venue;
+			break;
+		case THEME:
+			this.icon = R.drawable.ic_todo_theme;
+			break;
+		case MUSIC:
+			this.icon = R.drawable.ic_todo_music;
+		}
 		this.preview = preview;
 	}
 	
@@ -28,11 +42,7 @@ public class TodoListItem {
 	public String getPreview() {
 		return preview;
 	}
-	public ImageView getStatus() {
-		return status;
-	}
-	
-	public void setStatus(ImageView v) {
-		this.status = v;
+	public int getIcon() {
+		return icon;
 	}
 }

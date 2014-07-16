@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.android.apps.eventplanner.ItemDetailTestActivity.MyPagerAdapter;
+import com.android.apps.eventplanner.ItemDetailActivity.MyPagerAdapter;
 import com.android.apps.eventplanner.fragments.FoodMenuFragment;
 import com.android.apps.eventplanner.models.FoodMenu;
 import com.android.apps.eventplanner.utils.SmartFragmentStatePagerAdapter;
@@ -82,7 +82,7 @@ public class ItemDetailActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_detail_test);
+		setContentView(R.layout.activity_item_detail);
 		//getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		View mActionBarView = getLayoutInflater().inflate(R.layout.my_action_bar, null);
@@ -134,7 +134,7 @@ public class ItemDetailActivity extends FragmentActivity {
 					//get FoodList 
 					FoodMenuFragment selectedFood = (FoodMenuFragment)adapterViewPager.getRegisteredFragment(vpPager.getCurrentItem());
 					//save object into current event
-					Toast.makeText(ItemDetailActivity.this, selectedFood.getFood().getUrls().toString(), Toast.LENGTH_LONG).show();
+					//Toast.makeText(ItemDetailActivity.this, selectedFood.getFood().getUrls().toString(), Toast.LENGTH_LONG).show();
 				}
 			});
 		

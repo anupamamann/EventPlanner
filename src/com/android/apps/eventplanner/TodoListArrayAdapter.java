@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.apps.eventplanner.models.TodoListItem;
@@ -15,7 +15,8 @@ import com.android.apps.eventplanner.models.TodoListItem;
 public class TodoListArrayAdapter extends ArrayAdapter<TodoListItem> {
 	private TextView tvTodoHeading;
 	private TextView tvTodoPreview;
-	private FrameLayout flStatus;
+	//private FrameLayout flStatus;
+	private ImageView ivTodoItem;
 	
 	public TodoListArrayAdapter(Context context, List<TodoListItem> todos) {
 		super(context, R.layout.item_todo, todos);
@@ -30,6 +31,7 @@ public class TodoListArrayAdapter extends ArrayAdapter<TodoListItem> {
 		setupViews(convertView);
 		tvTodoHeading.setText(t.getHeading().name());
 		tvTodoPreview.setText(t.getPreview());
+		ivTodoItem.setImageResource(t.getIcon());
 		//flStatus.setBackground(R.drawable.ic_icon);
 		return convertView;
 	}
@@ -37,6 +39,7 @@ public class TodoListArrayAdapter extends ArrayAdapter<TodoListItem> {
 	private void setupViews(View v) {
 		tvTodoHeading = (TextView) v.findViewById(R.id.tvTodoHeading);
 		tvTodoPreview = (TextView) v.findViewById(R.id.tvTodoPreview);
-		flStatus = (FrameLayout) v.findViewById(R.id.flStatus);
+		ivTodoItem = (ImageView) v.findViewById(R.id.ivTodoItem);
+		//flStatus = (FrameLayout) v.findViewById(R.id.flStatus);
 	}
 }

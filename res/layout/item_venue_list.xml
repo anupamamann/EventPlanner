@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_margin="5dp" >
 
     <TextView
-        android:id="@+id/tvVenueAddressLabel"
+        android:id="@+id/tvVenueNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:text="Name:" />
+    
+    <TextView
+        android:id="@+id/tvVenueName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvVenueNameLabel"
+        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@+id/tvVenueNameLabel"
+        android:text="TextView" />
+    
+    <TextView
+        android:id="@+id/tvVenueAddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvVenueNameLabel"
+        android:layout_below="@+id/tvVenueNameLabel"
+        android:layout_marginTop="15dp"
         android:text="Address:" />
 
     <TextView
         android:id="@+id/tvVenueAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="40dp"
-        android:layout_toRightOf="@+id/tvVenueAddressLabel"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tvVenueCapacity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvVenueCapacityLabel"
-        android:layout_alignRight="@+id/tvVenueAddress"
+        android:layout_alignTop="@+id/tvVenueAddressLabel"
+        android:layout_alignLeft="@+id/tvVenueName"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/tvVenueCapacityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/tvVenueNameLabel"
         android:layout_below="@+id/tvVenueAddressLabel"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="Capacity:" />
+    
+    <TextView
+        android:id="@+id/tvVenueCapacity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvVenueCapacityLabel"
+        android:layout_alignLeft="@+id/tvVenueName"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/tvVenuePhotosLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvVenueCapacityLabel"
-        android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@+id/tvVenueAddress"
+        android:layout_marginTop="15dp"
+        android:layout_alignLeft="@+id/tvVenueNameLabel"
         android:text="Photos:" />
 
     <HorizontalScrollView
@@ -62,5 +81,14 @@
             android:orientation="horizontal" >
         </LinearLayout>
     </HorizontalScrollView>
+
+    <RadioButton
+        android:id="@+id/radioSelectVenueList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_alignTop="@+id/tvVenueAddressLabel"
+        android:text="Select" />
 
 </RelativeLayout>

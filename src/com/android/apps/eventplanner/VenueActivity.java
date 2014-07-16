@@ -1,42 +1,26 @@
 package com.android.apps.eventplanner;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ActionBar.Tab;
-import android.content.Intent;
-import android.content.IntentSender;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.apps.eventplanner.fragments.ListViewFragment;
+import com.android.apps.eventplanner.fragments.ListViewFragment.ListViewFragmentListener;
 import com.android.apps.eventplanner.fragments.MapViewFragment;
 import com.android.apps.eventplanner.listeners.FragmentTabListener;
-import com.android.apps.eventplanner.models.TodoListItem.Type;
+import com.android.apps.eventplanner.VenuePhotosDialog.MapViewFragmentListener;
 import com.android.apps.eventplanner.models.Venue;
-import com.android.apps.eventplanner.utils.GoogleClient;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class VenueActivity extends FragmentActivity  {
-
+public class VenueActivity extends FragmentActivity implements
+		ListViewFragmentListener, MapViewFragmentListener {
 	
+	VenueListArrayAdapter adapter;
+	Venue venue;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) { 
@@ -47,7 +31,6 @@ public class VenueActivity extends FragmentActivity  {
 
 	}
 
-	
 	private void setupTabs() {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -100,5 +83,25 @@ public class VenueActivity extends FragmentActivity  {
 			return mDialog;
 		}
 	}
+	
+	public void onAddVenueList(View v) {
+		Venue toAdd = adapter.getSelectedPosition();
+		Toast.makeText(this, toAdd.getName(), Toast.LENGTH_SHORT).show();
+	}
+	
+	public void onAddVenueMap(View v) {
+		Toast.makeText(this, venue.getName(), Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void passAdapter(VenueListArrayAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+	@Override
+	public void passVenue(Venue v) {
+		this.venue = v;
+	}
+
 
 }

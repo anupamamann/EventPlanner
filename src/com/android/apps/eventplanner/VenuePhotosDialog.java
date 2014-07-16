@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.apps.eventplanner.models.Venue;
 import com.android.apps.eventplanner.utils.GoogleClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -27,14 +28,19 @@ public class VenuePhotosDialog extends DialogFragment {
 	AsyncHttpClient client;
 	ImageResultsArrayAdapter imageAdapter;
 	List<ImageResult> images;
+	Venue venue;
+	
+	public interface MapViewFragmentListener {
+		void passVenue(Venue v);
+	}
 	
 	public VenuePhotosDialog() {
 	}
 
-	public static VenuePhotosDialog newInstance(String title) {
+	public static VenuePhotosDialog newInstance(Venue v) {
 		VenuePhotosDialog frag = new VenuePhotosDialog();
 		Bundle args = new Bundle();
-		args.putString("title", title);
+		args.putString("title", v.getName());
 		frag.setArguments(args);
 		return frag;
 	}
@@ -63,5 +69,8 @@ public class VenuePhotosDialog extends DialogFragment {
 		return v;
 	}
 	
+	public void onAddVenueMap(View v) {
+		Toast.makeText(getActivity(), venue.getName(), Toast.LENGTH_SHORT).show();
+	}
 	
 }
