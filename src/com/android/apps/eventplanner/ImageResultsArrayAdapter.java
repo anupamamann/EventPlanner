@@ -27,7 +27,7 @@ public class ImageResultsArrayAdapter extends ArrayAdapter<ImageResult> {
 			ivImage = (SmartImageView) convertView;
 			ivImage.setImageResource(android.R.color.transparent);
 		}
-		ivImage.setImageUrl(imageInfo.getThumbUrl());
+		ivImage.setImageUrl(imageInfo.getUrl());
 		return ivImage;
 	}
 

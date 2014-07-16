@@ -7,32 +7,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class ImageResult implements Serializable {
 	private static final long serialVersionUID = -1586689875926370629L;
-	private String fullUrl;
-	private String tbUrl;
+	private String url;
 	
 	public ImageResult(JSONObject json) {
 		try {
-			this.fullUrl = json.getString("url");
-			this.tbUrl = json.getString("tbUrl");
+			this.url = json.getString("url");
+			Log.i("EVENT", url);
 		} catch (Exception e) {
-			this.fullUrl = null;
-			this.tbUrl = null;
+			this.url = null;
 		}
 	}
 	
-	public String getFullUrl() {
-		return fullUrl;
-	}
-
-	public String getThumbUrl() {
-		return tbUrl;
+	public String getUrl() {
+		return url;
 	}
 	
 	@Override
 	public String toString() {
-		return this.tbUrl;
+		return this.url;
 	}
 
 	public static ArrayList<ImageResult> fromJSONArray(
