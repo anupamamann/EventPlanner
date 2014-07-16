@@ -19,6 +19,9 @@ import com.parse.ParseQuery;
 @ParseClassName("Events")
 public class Events extends ParseObject implements Serializable{
 	
+	
+	private static Events instance = null;
+	
 	private static final long serialVersionUID = -1798493934024749490L;
 	private String imageSrc;
 	private String eventDescription;
@@ -74,6 +77,12 @@ public class Events extends ParseObject implements Serializable{
 	
 	public static ParseQuery<Events> getQuery(){
 		return ParseQuery.getQuery(Events.class);
+	}
+	
+	
+	public static Events getCurrentEvent(){
+		
+		return new Events();
 	}
 
 }

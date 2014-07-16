@@ -1,5 +1,6 @@
 package com.android.apps.eventplanner.models;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +13,12 @@ import android.widget.Toast;
 import com.android.apps.eventplanner.utils.Constants.Cuisine;
 import com.android.apps.eventplanner.utils.Constants.FoodType;
 
-public class FoodMenu {
+public class FoodMenu implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1938346539234896128L;
 	private ArrayList<Food> foods;
 	private Map<FoodType, ArrayList<Food>> foodTypeMap;
 	private URL urls;
@@ -76,7 +81,11 @@ public class FoodMenu {
 		ArrayList<FoodMenu> foodMenu = new ArrayList<FoodMenu>();
 		foodMenu.add(new FoodMenu(Food.getFoodMenu(), "http://www.lafiestarestaurant.net/menu.nxg", Cuisine.MEXICAN));
 		foodMenu.add(new FoodMenu(Food.getFoodMenu(), "http://www.amber-india.com/Indian-Restaurant-San-Francisco/menu.html", Cuisine.INDIAN));
+		/*foodMenu.add(new FoodMenu(Food.getFoodMenu(), "http://www.maggianos.com/en/pages/menu.aspx", Cuisine.ITALIAN));
 		foodMenu.add(new FoodMenu(Food.getFoodMenu(), "http://www.maggianos.com/en/pages/menu.aspx", Cuisine.ITALIAN));
+		foodMenu.add(new FoodMenu(Food.getFoodMenu(), "http://www.maggianos.com/en/pages/menu.aspx", Cuisine.ITALIAN));
+		foodMenu.add(new FoodMenu(Food.getFoodMenu(), "http://www.maggianos.com/en/pages/menu.aspx", Cuisine.ITALIAN));
+		foodMenu.add(new FoodMenu(Food.getFoodMenu(), "http://www.maggianos.com/en/pages/menu.aspx", Cuisine.ITALIAN));*/
 		
 		return foodMenu;
 		
