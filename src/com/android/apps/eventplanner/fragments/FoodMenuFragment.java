@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.apps.eventplanner.FoodMenuArrayAdapter;
 import com.android.apps.eventplanner.R;
 import com.android.apps.eventplanner.models.Food;
 import com.android.apps.eventplanner.models.FoodMenu;
@@ -32,7 +31,6 @@ public class FoodMenuFragment extends Fragment {
 	List<FoodMenu> foodMenu;
 	FoodMenu fMenu;
 	ArrayList<Food> food;
-	FoodMenuArrayAdapter fAdapter;
 	ListView lvMenu;
 	
 	Menu mMenu;
