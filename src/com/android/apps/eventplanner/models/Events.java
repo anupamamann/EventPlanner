@@ -36,14 +36,28 @@ public class Events extends ParseObject implements Serializable{
 	private List<Guest> guests;
 	
 
+	
+	
 	public Events() {
 		// TODO Auto-generated constructor stub
 	}
-	public Events(int eventID, String eventDescription, String imageSrc){
+	
+	public static Events getInstance() {
+	      return instance;
+	   }
+	
+	 public static Events createEvent() {
+	      if(instance == null) {
+	         instance = new Events();
+	      }
+	      return instance;
+	   }
+	 
+/*	public Events(int eventID, String eventDescription, String imageSrc){
 		this.eventID = eventID;
 		this.eventDescription = eventDescription;
 		this.imageSrc = imageSrc;
-	}
+	}*/
 	
 	public String getImageSrc() {
 		return getString("imgSrc");
@@ -83,6 +97,86 @@ public class Events extends ParseObject implements Serializable{
 	public static Events getCurrentEvent(){
 		
 		return new Events();
+	}
+
+
+	public FoodMenu getFood() {
+		return food;
+	}
+
+
+	public void setFood(FoodMenu food) {
+		this.food = food;
+	}
+
+
+	public Theme getTheme() {
+		return theme;
+	}
+
+
+	public void setTheme(Theme theme) {
+		this.theme = theme;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+	public Venue getVenue() {
+		return venue;
+	}
+
+
+	public void setVenue(Venue venue) {
+		this.venue = venue;
+	}
+
+
+	public MusicPlaylist getMusic() {
+		return music;
+	}
+
+
+	public void setMusic(MusicPlaylist music) {
+		this.music = music;
+	}
+
+
+	public List<Guest> getGuests() {
+		return guests;
+	}
+
+
+	public void setGuests(List<Guest> guests) {
+		this.guests = guests;
+	}
+
+
+	public EventType getType() {
+		return type;
+	}
+
+
+	public void setType(EventType type) {
+		this.type = type;
 	}
 
 }

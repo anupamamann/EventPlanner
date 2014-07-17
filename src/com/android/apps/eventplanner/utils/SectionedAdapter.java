@@ -3,6 +3,7 @@ package com.android.apps.eventplanner.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -94,17 +95,21 @@ abstract public class SectionedAdapter extends BaseAdapter{
 	public View getView(int position, View convertView,
 			ViewGroup parent) {
 		int sectionIndex=0;
-
+		Log.d("position:", position+"");
 		for (Section section : this.sections) {
 			if (position==0) {
+				Log.d("caption", section.caption+"");
 				return(getHeaderView(section.caption, sectionIndex,
 						convertView, parent));
 			}
 
+			
 			int size=section.adapter.getCount()+1;
 
+			Log.d("caption", section.caption+"");
+			
 			if (position<size) {
-				return(getListView(position,convertView,	parent));
+				return(getListView(position-1,convertView,	parent));
 			}
 
 			position-=size;

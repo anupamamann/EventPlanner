@@ -2,7 +2,6 @@ package com.android.apps.eventplanner.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,10 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,62 +30,71 @@ import com.android.apps.eventplanner.utils.SectionedAdapter;
 public class FoodMenuFragment extends Fragment {
 	
 	List<FoodMenu> foodMenu;
+	FoodMenu fMenu;
 	ArrayList<Food> food;
 	FoodMenuArrayAdapter fAdapter;
 	ListView lvMenu;
-	ImageButton btAdd;
-	Menu mMenu;
 	
+	Menu mMenu;
+	int currentPage;
 	ImageView ivFood;
 	TextView tvTitle; 
 	TextView tvDescription;
 	
 	
-	public static FoodMenuFragment newInstance(int position, FoodMenu menu) {
-		FoodMenuFragment frag = new FoodMenuFragment();
+	public static FoodMenuFragment newInstance(int page, FoodMenu fMenu) {
+		FoodMenuFragment fragmentFirst = new FoodMenuFragment();
 		Bundle args = new Bundle();
-		//TODO
-		frag.setArguments(args);
-		return frag;
+		args.putInt("currentPage", page);
+		args.putSerializable("fMenu", fMenu);
+		fragmentFirst.setArguments(args);
+		return fragmentFirst;
 	}
+	
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		foodMenu = FoodMenu.getFoodMenu();
-		food = Food.getFoodMenu();
+		//foodMenu = FoodMenu.getFoodMenu();
+		//food = Food.getFoodMenu();
+		
+		fMenu = (FoodMenu)getArguments().getSerializable("fMenu");
+		currentPage = getArguments().getInt("currentPage");
 		setHasOptionsMenu(true);
 	}
 	
-	
+	public FoodMenu getFood(){
+		return this.fMenu;
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_food_menu, container, false);
 		lvMenu = (ListView)v.findViewById(R.id.lvMenu);
-		btAdd = (ImageButton)v.findViewById(R.id.btnAdd);
-		Toast.makeText(getActivity(), foodMenu.size()+":MapSize:" + foodMenu.get(0).getFoodTypeMap().size() , Toast.LENGTH_LONG).show();
 		
+		//btAdd.setContentDescription(contentDescription);
+//		Toast.makeText(getActivity(),"App:"+foodMenu.get(0).getFoodTypeMap().get(FoodType.APPETIZER).get(0).getDescription()+"",Toast.LENGTH_LONG).show();
 		
-		
-		for(Map.Entry<FoodType, ArrayList<Food>> entry: foodMenu.get(0).getFoodTypeMap().entrySet()){
-			//Toast.makeText(getActivity(),entry.getKey().getType() + ":" + entry.getValue().size()+"" +entry.getValue().get(0).getDescription() , Toast.LENGTH_SHORT).show();
-			adapter.addSection(entry.getKey().getType(),new ArrayAdapter<Food>(getActivity(),R.layout.item_food, food));
+		for(FoodType f: fMenu.getFoodTypeMap().keySet()){
+			//Toast.makeText(getActivity(),f.getType() + ":" + fMenu.getFoodTypeMap().get(f).get(0).getDescription() , Toast.LENGTH_SHORT).show();
+			adapter.addSection(f.getType(),new ArrayAdapter<Food>(getActivity(),R.layout.item_food, fMenu.getFoodTypeMap().get(f)));
 		}
+		/*for(FoodType f: foodMenu.get(0).getFoodTypeMap().keySet()){
+			Toast.makeText(getActivity(),f.getType() + ":" + foodMenu.get(0).getFoodTypeMap().get(f).get(0).getDescription() , Toast.LENGTH_SHORT).show();
+			adapter.addSection(f.getType(),new ArrayAdapter<Food>(getActivity(),R.layout.item_food, foodMenu.get(0).getFoodTypeMap().get(f)));
+		}*/
 		
-
 		lvMenu.setAdapter(adapter);
 		
-		btAdd.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				//get FoodList 
-				
-			}
-		});
+	/*	if(Events.getInstance() !=null){
+			mMenu.findItem(R.id.miAdd).setVisible(false);
+		}else{
+			mMenu.findItem(R.id.miAdd).setVisible(true);
+		}*/
+		
+		
 		return v;
 
 	}
@@ -152,14 +158,10 @@ public class FoodMenuFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
 		mMenu = menu;
+		
 		inflater.inflate(R.menu.menu_todo, menu);
 	}
 	
-	public void onAdd(View v) {
-		
-		Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
-		
-	}
 	
 	@Override
 	
@@ -167,8 +169,8 @@ public class FoodMenuFragment extends Fragment {
 	   // handle item selection
 	   switch (item.getItemId()) {
 	      case R.id.miAdd:
-	          Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
-	          //Save Menu to Event 
+	          Toast.makeText(getActivity(), "Open create dialog", Toast.LENGTH_SHORT).show();
+	          //
 	          
 	          //disable Add button
 	          if(mMenu != null){
@@ -179,6 +181,8 @@ public class FoodMenuFragment extends Fragment {
 	         return super.onOptionsItemSelected(item);
 	   }
 	}
+
+
 
 	
 }

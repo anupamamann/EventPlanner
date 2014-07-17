@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,18 +13,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.apps.eventplanner.models.EventRecommendation;
 import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.utils.Constants;
 import com.android.apps.eventplanner.utils.Functions;
-import com.android.apps.eventplanner.R;
 
-public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
+public class EventTypeArrayAdapter extends ArrayAdapter<EventRecommendation> {
 	
 	ImageButton ivEvent;
 	TextView tvEventDescription;
 	
-	public EventTypeArrayAdapter(Context context, List<Events> events){
+	public EventTypeArrayAdapter(Context context, List<EventRecommendation> events){
 		super(context,R.layout.item_event_display, events);
 		
 	}
@@ -48,7 +50,7 @@ public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
 				
 				//call activity to generate event to-do list 
 				Intent intent = new Intent(getContext(), ItemDetailActivity.class);
-				intent.putExtra(Constants.EVENT_ID, eventType);
+				intent.putExtra(Constants.EVENT_TYPE, eventType.toString());
 				getContext().startActivity(intent);
 				
 			}
@@ -61,7 +63,7 @@ public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
 	
 	
 	public boolean setUpViews(View v, int position){
-		Events eventInfo;
+		EventRecommendation eventInfo;
 		try{
 			eventInfo = this.getItem(position);
 			tvEventDescription = (TextView)v.findViewById(R.id.tvEventDescription);
@@ -70,16 +72,17 @@ public class EventTypeArrayAdapter extends ArrayAdapter<Events> {
 			return false;
 		}
 
-		tvEventDescription.setText(eventInfo.getEventDescription());
-		Drawable image = (Drawable)Functions.getResource(v, eventInfo.getImageSrc(), Constants.DRAWABLE);
+		Log.d("type:", eventInfo.getType().toString() +":" + eventInfo.getEventImage());
+		tvEventDescription.setText(eventInfo.getType().toString());
+		Drawable image = (Drawable)Functions.getResource(v, eventInfo.getEventImage(), Constants.DRAWABLE);
 		if(image == null){ //set a default image
 			ivEvent.setImageResource(R.drawable.ic_launcher);
 		}else{
 			ivEvent.setImageDrawable(image);
 		}
-		ivEvent.setContentDescription(eventInfo.toString());
-		
+		ivEvent.setContentDescription(eventInfo.getType().toString());
 		return true;
+	
 	}
 	
 	

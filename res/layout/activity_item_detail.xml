@@ -8,7 +8,7 @@
         android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:src="@drawable/ic_food" />
+        android:src="@drawable/ic_after_item" />
     
     <android.support.v4.view.ViewPager
         android:id="@+id/vpPager"
@@ -40,5 +40,16 @@
         android:background="@null"
         android:clickable="true"
         android:src="@drawable/ic_next" />
+
+    <TextView
+        android:id="@+id/tvNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/vpPager"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnNext"
+        android:layout_toRightOf="@+id/btnPrevious"
+        android:visibility="invisible"
+        android:text="" />
     
 </RelativeLayout>
