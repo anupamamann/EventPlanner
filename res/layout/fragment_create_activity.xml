@@ -23,23 +23,29 @@
         android:id="@+id/etName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
+        android:layout_below="@+id/tvName"
         android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/tvTitle"
+        android:layout_toRightOf="@+id/tvName"
         android:ems="10"
         android:gravity="top|left"
         android:singleLine="false"
-        android:textSize="14dp" >
+        android:textSize="14dp" />
 
+       <TextView
+        android:id="@+id/tvEventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etName"
+        android:layout_alignLeft="@+id/tvName"
+        android:layout_margin="10dp"
+        android:text="Event On" />
        
-    </EditText>
-
     <TextView
         android:id="@+id/tvDecription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvTitle"
-        android:layout_below="@+id/etTitle"
+        android:layout_alignLeft="@+id/tvName"
+        android:layout_below="@+id/btnChangeDate"
         android:layout_margin="10dp"
         android:text="Description" />
     
@@ -47,11 +53,11 @@
         android:id="@+id/etDescription"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etTitle"
-        android:layout_alignRight="@+id/etTitle"
+        android:layout_alignLeft="@+id/etName"
+        android:layout_alignRight="@+id/etName"
         android:layout_below="@+id/tvDecription"
         android:layout_margin="10dp"
-        android:background="@drawable/compose_bg"
+        android:background="@drawable/compose_bg"	
         android:gravity="top|left"
         android:inputType="textMultiLine"
         android:lines="20"
@@ -68,5 +74,24 @@
          android:layout_below="@+id/etDescription"
          android:layout_centerHorizontal="true"
          android:background="@drawable/ic_save" />
+
+     <TextView
+         android:id="@+id/tvCurrentDate"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/etDescription"
+         android:layout_below="@+id/tvEventDate"
+         android:text="Current Date"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <Button
+         android:id="@+id/btnChangeDate"
+         style="?android:attr/buttonStyleSmall"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/tvCurrentDate"
+         android:layout_alignBottom="@+id/tvCurrentDate"
+         android:layout_alignRight="@+id/etDescription"
+         android:src="@drawable/ic_pick_date" />
 
 </RelativeLayout>
