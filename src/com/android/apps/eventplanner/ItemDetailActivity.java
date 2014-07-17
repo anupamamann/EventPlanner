@@ -4,6 +4,7 @@ package com.android.apps.eventplanner;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -26,6 +27,7 @@ import com.android.apps.eventplanner.fragments.FoodMenuFragment;
 import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.models.FoodMenu;
 import com.android.apps.eventplanner.utils.Constants;
+import com.android.apps.eventplanner.utils.Functions;
 import com.android.apps.eventplanner.utils.Constants.EventType;
 import com.android.apps.eventplanner.utils.SmartFragmentStatePagerAdapter;
 
@@ -77,8 +79,9 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
+        	 
         	// return Class.forname(fragmentName).getMethod(fragmentInstance, null).invoke(page, array).
-        		Log.d("Food",FoodMenu.getFoodMenu().size() + "" );
+        		Log.d("Food URL:",FoodMenu.getFoodMenu(eType).get(position).getUrls() + "" + ":position " + position );
               return FoodMenuFragment.newInstance(position,  FoodMenu.getFoodMenu(eType).get(position));
         }
          
@@ -97,7 +100,6 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_detail);
-		Toast.makeText(ItemDetailActivity.this, "on create" + FoodMenu.getFoodMenu().size(), Toast.LENGTH_LONG).show();
 		//getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		View mActionBarView = getLayoutInflater().inflate(R.layout.my_action_bar, null);
@@ -124,7 +126,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		
 		
 		//getFood for given Event
-		
+			
 		MyPagerAdapter.setFragment(FoodMenu.getFoodMenu(eType).size(), "FoodMenuFragment", "newInstance",eType);
 		vpPager.setAdapter(adapterViewPager);
 		
@@ -134,14 +136,14 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	        	@Override
 	        	public void onPageSelected(int position) {
 	        		if(position==0){
-	        			Toast.makeText(ItemDetailActivity.this,"previous invisible: " + position, Toast.LENGTH_SHORT).show();
+	        			//Toast.makeText(ItemDetailActivity.this,"previous invisible: " + position, Toast.LENGTH_SHORT).show();
 	        			btPrevious.setClickable(false);
 	        		}
 	        		if(position == (MyPagerAdapter.NUM_ITEMS - 1)){
-	        			Toast.makeText(ItemDetailActivity.this,"next invisible: " + position, Toast.LENGTH_SHORT).show();
+	        			//Toast.makeText(ItemDetailActivity.this,"next invisible: " + position, Toast.LENGTH_SHORT).show();
 	        			btNext.setClickable(false);
 	        		}
-	        		Toast.makeText(ItemDetailActivity.this,"Selected page position: " + position, Toast.LENGTH_SHORT).show();
+	        		
 	        	}
 	        	
 	        	// This method will be invoked when the current page is scrolled
@@ -149,11 +151,11 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	        	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 	        		// Code goes here, handle the case where 
 	        		if(position==0){
-	        			Toast.makeText(ItemDetailActivity.this,"previous invisible: " + position, Toast.LENGTH_SHORT).show();
+	        			//Toast.makeText(ItemDetailActivity.this,"previous invisible: " + position, Toast.LENGTH_SHORT).show();
 	        			btPrevious.setClickable(false);
 	        		}
 	        		if(position == (MyPagerAdapter.NUM_ITEMS - 1)){
-	        			Toast.makeText(ItemDetailActivity.this,"next invisisble: " + position, Toast.LENGTH_SHORT).show();
+	        			//Toast.makeText(ItemDetailActivity.this,"next invisisble: " + position, Toast.LENGTH_SHORT).show();
 	        			btNext.setClickable(false);
 	        		}
 	        	}
@@ -187,6 +189,13 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 						if(selectedFragment instanceof FoodMenuFragment){
 							currentEvent.setFood(((FoodMenuFragment)selectedFragment).getFood());
 							showEventCreatedDialog("Item saved to " + currentEvent.getName());
+							Drawable image = (Drawable)Functions.getResource(v, "ic_after_save", Constants.DRAWABLE);
+							if(image == null){ //set a default image
+								btAdd.setImageResource(R.drawable.ic_launcher);
+							}else{
+								btAdd.setImageDrawable(image);
+							}
+							
 							
 						}
 						/*else if(selectedFragment instanceof MusicFragment){
@@ -194,7 +203,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 						}*/
 					}
 					
-					Toast.makeText(ItemDetailActivity.this, ((FoodMenuFragment)selectedFragment).getFood().getUrls().toString(), Toast.LENGTH_LONG).show();
+					//Toast.makeText(ItemDetailActivity.this, ((FoodMenuFragment)selectedFragment).getFood().getUrls().toString(), Toast.LENGTH_LONG).show();
 					
 				}
 			});
@@ -231,7 +240,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	}
 	
 	public void onBack(View v) {
-		Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
 		
 	}
 	
