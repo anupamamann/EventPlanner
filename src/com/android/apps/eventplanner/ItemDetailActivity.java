@@ -19,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.apps.eventplanner.fragments.CreateEventFragment;
+import com.android.apps.eventplanner.fragments.PlaylistFragment;
 import com.android.apps.eventplanner.fragments.CreateEventFragment.CreateEventListener;
+import com.android.apps.eventplanner.fragments.DatePickerFragment.DateChangeListner;
 import com.android.apps.eventplanner.fragments.FoodMenuFragment;
 import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.models.FoodMenu;
@@ -27,7 +29,7 @@ import com.android.apps.eventplanner.utils.Constants;
 import com.android.apps.eventplanner.utils.Constants.EventType;
 import com.android.apps.eventplanner.utils.SmartFragmentStatePagerAdapter;
 
-public class ItemDetailActivity extends FragmentActivity implements CreateEventListener {
+public class ItemDetailActivity extends FragmentActivity implements CreateEventListener, DateChangeListner {
 	SmartFragmentStatePagerAdapter adapterViewPager;
 	ViewPager vpPager;
 	
@@ -35,7 +37,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	ImageButton btNext;
 	ImageButton btPrevious;
 	TextView tvNotification;
-	
+	CreateEventFragment createFragment;
 	
 	
 	public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter  {
@@ -43,6 +45,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		static String fragmentName;
 		static String fragmentInstance;
 		static EventType eType;
+		
 		
 		public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -177,7 +180,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 					if(currentEvent == null){
 						//open dialog to notify and create event
 						FragmentManager fm = getSupportFragmentManager();
-						CreateEventFragment createFragment = CreateEventFragment.newInstance("New Event");
+						createFragment = CreateEventFragment.newInstance("New Event");
 						createFragment.show(fm, "compose_dialog");
 						
 					}else{
@@ -235,7 +238,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	@Override
 	public void onEventCreate(String eventName) {
 		// TODO Auto-generated method stub
-		showEventCreatedDialog(eventName +" created");
+		showEventCreatedDialog("Event " + eventName +" created");
 	}
 	
 	public void showEventCreatedDialog(String message){
@@ -250,6 +253,17 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	        });
 		alertNotification.create();
 	     alertNotification.show();
+	}
+
+
+	@Override
+	public void onDateSelected(String text) {
+		// TODO Auto-generated method stub
+		//call other fragment and send date selected
+		CreateEventFragment frag  = (CreateEventFragment) 
+                getSupportFragmentManager().findFragmentById(R.id.flContainer);
+		createFragment.onDateSet(text);
+		
 	}
 	
 }

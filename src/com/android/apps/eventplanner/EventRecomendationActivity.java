@@ -20,8 +20,8 @@ public class EventRecomendationActivity extends Activity {
 	GridView gvImages;
 	ArrayList<EventRecommendation> eventsList; 
 	EventTypeArrayAdapter eventAdapter;
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,10 +30,10 @@ public class EventRecomendationActivity extends Activity {
 		eventsList = new ArrayList<EventRecommendation>();
 		eventAdapter = new EventTypeArrayAdapter(this, eventsList);
 		gvImages.setAdapter(eventAdapter);
-		Toast.makeText(EventRecomendationActivity.this, "Parse", Toast.LENGTH_LONG).show();
-		
-	
-		
+		//	Toast.makeText(EventRecomendationActivity.this, "Parse", Toast.LENGTH_LONG).show();
+
+
+
 		ParseQuery<EventRecommendation> query  = ParseQuery.getQuery(EventRecommendation.class);
 		query.findInBackground(new FindCallback<EventRecommendation>() {
 
@@ -42,8 +42,9 @@ public class EventRecomendationActivity extends Activity {
 				Log.d("events", events.size()+":" + events.get(0).getEventImage());
 				if(events !=null)
 					eventsList.addAll(events);
+				eventAdapter.notifyDataSetChanged();
 			}
 		});
-	
+
 	}
 }

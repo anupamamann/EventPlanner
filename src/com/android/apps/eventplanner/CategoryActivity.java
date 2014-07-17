@@ -15,6 +15,6 @@ public class CategoryActivity extends Activity {
 		setContentView(R.layout.activity_category);
 		//Note::get the Event ID from the intent
 		//pull up the list of event planning categories for this particular event  
-		Toast.makeText(CategoryActivity.this, getIntent().getStringExtra(Constants.EVENT_ID)+" got clicked", Toast.LENGTH_LONG).show();
+		Toast.makeText(CategoryActivity.this, getIntent().getStringExtra(Constants.EVENT_TYPE)+" got clicked", Toast.LENGTH_LONG).show();
 	}
 }
