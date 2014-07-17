@@ -3,14 +3,14 @@
 
     <string name="app_name">EventPlanner</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_todo">TodoActivity</string>
+    <string name="title_activity_todo">TodoList</string>
     <string name="TodoHeading">Todo1</string>
     <string name="TodoPreview">Preview1</string>
-    <string name="title_activity_create_new_event">CreateNewEventActivity</string>
-    <string name="title_activity_my_saved_events">MySavedEventsActivity</string>
+    <string name="title_activity_create_new_event">NewEvent</string>
+    <string name="title_activity_my_saved_events">MySavedEvents</string>
     <string name="title_activity_category">CategoryActivity</string>
-    <string name="title_activity_venue">VenueActivity</string>
-    <string name="title_activity_item_detail">ItemDetailActivity</string>
+    <string name="title_activity_venue">Venue</string>
+    <string name="title_activity_item_detail">Food</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="add_to_event">Add to Event</string>
