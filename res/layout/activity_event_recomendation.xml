@@ -5,20 +5,28 @@
      
     tools:context="${packageName}.${activityClass}" >
 
+    <ImageView 
+        android:id="@+id/ivEventPlanning"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/event"/>
+    
    <GridView
-		    android:id="@+id/gvEventTypes"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_margin="10dp"
-		    android:columnWidth="75dp"
-		    android:numColumns="auto_fit"
-		    android:verticalSpacing="10dp"
-    		android:horizontalSpacing="10dp"
-    		android:gravity="center"
-		    android:drawSelectorOnTop="true"
-		    android:scrollbars="vertical"
-		    android:visibility="visible"
-		    android:fadeScrollbars="false">
+       android:id="@+id/gvEventTypes"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/ivEventPlanning"
+       android:layout_margin="8dp"
+       android:columnWidth="100dp"
+       android:drawSelectorOnTop="true"
+       android:fadeScrollbars="false"
+       android:gravity="center"
+       android:horizontalSpacing="10dp"
+       android:numColumns="auto_fit"
+       android:verticalSpacing="10dp"
+       android:visibility="visible" >
+
 		</GridView>
 
 </RelativeLayout>

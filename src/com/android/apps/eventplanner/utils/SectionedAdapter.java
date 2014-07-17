@@ -3,16 +3,15 @@ package com.android.apps.eventplanner.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 
 abstract public class SectionedAdapter extends BaseAdapter{
 	abstract protected View getHeaderView(String caption,int index,	View convertView,ViewGroup parent);
-	abstract protected View getListView(int index,	View convertView,ViewGroup parent);
-
+	abstract protected View getListView(int position, View convertView, ViewGroup parent);
+	
 	private List<Section> sections=new ArrayList<Section>();
 	private static int TYPE_SECTION_HEADER=0;
 
@@ -20,7 +19,7 @@ abstract public class SectionedAdapter extends BaseAdapter{
 		super();
 	}
 
-	public void addSection(String caption, ArrayAdapter<?> adapter) {
+	public void addSection(String caption, Adapter adapter) {
 		sections.add(new Section(caption, adapter));
 	}
 
@@ -31,7 +30,7 @@ abstract public class SectionedAdapter extends BaseAdapter{
 			}
 
 			int size=section.adapter.getCount()+1;
-			
+
 			if (position<size) {
 				return(section.adapter.getItem(position-1));
 			}
@@ -95,21 +94,17 @@ abstract public class SectionedAdapter extends BaseAdapter{
 	public View getView(int position, View convertView,
 			ViewGroup parent) {
 		int sectionIndex=0;
-		Log.d("position:", position+"");
+
 		for (Section section : this.sections) {
 			if (position==0) {
-				Log.d("caption", section.caption+"");
 				return(getHeaderView(section.caption, sectionIndex,
 						convertView, parent));
 			}
 
-			
 			int size=section.adapter.getCount()+1;
 
-			Log.d("caption", section.caption+"");
-			
 			if (position<size) {
-				return(getListView(position-1,convertView,	parent));
+				return(getListView(position-1, convertView, parent));
 			}
 
 			position-=size;
@@ -118,9 +113,7 @@ abstract public class SectionedAdapter extends BaseAdapter{
 
 		return(null);
 	}
-	
-	
-	
+
 	@Override
 	public long getItemId(int position) {
 		return(position);
@@ -128,11 +121,13 @@ abstract public class SectionedAdapter extends BaseAdapter{
 
 	class Section {
 		String caption;
-		ArrayAdapter<?> adapter;
+		Adapter adapter;
 
-		Section(String caption, ArrayAdapter<?> adapter) {
+		Section(String caption, Adapter adapter) {
 			this.caption=caption;
 			this.adapter=adapter;
 		}
 	}
+
+	
 }

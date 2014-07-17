@@ -39,9 +39,8 @@ public class EventRecomendationActivity extends Activity {
 
 			@Override
 			public void done(List<EventRecommendation> events, ParseException arg1) {
-				Log.d("events", events.size()+":" + events.get(0).getEventImage());
 				if(events !=null)
-					eventsList.addAll(events);
+					eventsList.addAll(events);	
 				eventAdapter.notifyDataSetChanged();
 			}
 		});

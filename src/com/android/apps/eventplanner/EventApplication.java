@@ -51,7 +51,7 @@ public class EventApplication extends Application {
 				//recoCocktail.saveInBackground();
 				//recoWedding.saveInBackground();
 		
-		ParseObject f1 = new ParseObject("Food");
+		/*ParseObject f1 = new ParseObject("Food");
 		f1.put("title","Roadside Sliders");
 		f1.put("image","cheesecake" );
 		f1.put("description","Bite-Sized Burgers on Mini-Buns Served with Grilled Onions" );
@@ -83,11 +83,11 @@ public class EventApplication extends Application {
 		foods.add(f4);
 		
 		
-		ArrayList<Food> fList = new ArrayList<Food>();
-		fList.add(new Food("Bite-Sized Burgers on Mini-Buns Served with Grilled Onions, Pickles and Ketchup.", "Roadside Sliders", "cheesecake", FoodType.APPETIZER));
-		fList.add(new Food("A Rich Parmesan Cream Sauce. Available with Chicken..", "Fettuccini Alfredo", "cheesecake", FoodType.ENTREE));
-		fList.add(new Food("Italian Custard Made with Mascarpone, Whipped Cream, Lady Fingers, Marsala and Coffee Liqueur. Topped with Whipped Cream and Ground Chocolate..", "Tiramisu", "cheesecake", FoodType.DESSERT));
-		fList.add(new Food("Rum and Tropical Juices Topped with Myer's and Kraken Rums .", "Mai Tai", "cheesecake", FoodType.BEVERAGE));
+		//ArrayList<Food> fList = new ArrayList<Food>();
+		//fList.add(new Food("Bite-Sized Burgers on Mini-Buns Served with Grilled Onions, Pickles and Ketchup.", "Roadside Sliders", "cheesecake", FoodType.APPETIZER));
+		//fList.add(new Food("A Rich Parmesan Cream Sauce. Available with Chicken..", "Fettuccini Alfredo", "cheesecake", FoodType.ENTREE));
+		//fList.add(new Food("Italian Custard Made with Mascarpone, Whipped Cream, Lady Fingers, Marsala and Coffee Liqueur. Topped with Whipped Cream and Ground Chocolate..", "Tiramisu", "cheesecake", FoodType.DESSERT));
+		//fList.add(new Food("Rum and Tropical Juices Topped with Myer's and Kraken Rums .", "Mai Tai", "cheesecake", FoodType.BEVERAGE));
 		
 		
 		List<EventType> eList = new ArrayList<EventType>();
@@ -98,12 +98,12 @@ public class EventApplication extends Application {
 		eList1.add(EventType.WEDDING.toString());
 		eList1.add(EventType.BIRTHDAY.toString());
 		
-		fMenuBirthday = new FoodMenu(1, fList,eList ,"http://www.thecheesecakefactory.com/menu/welcome/Welcome", Cuisine.ITALIAN);
-		fMenuBirthday.put("food", foods);
-		fMenuBirthday.put("events", eList1);
-		fMenuBirthday.saveInBackground();
+		//fMenuBirthday = new FoodMenu(1, fList,eList ,"http://www.thecheesecakefactory.com/menu/welcome/Welcome", Cuisine.ITALIAN);
+		//fMenuBirthday.put("food", foods);
+		//fMenuBirthday.put("events", eList1);
+		//fMenuBirthday.saveInBackground();
 		
-
+*/
 		client = new GoogleClient();
 		super.onCreate();
 	}

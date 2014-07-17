@@ -19,7 +19,7 @@ public class Food{
 		super();
 	}
 	
-	public Food(String Description, String Title, String image, FoodType type) {
+	public Food(String Title, String Description, String image, FoodType type) {
 		//put("description", Description);
 		//put("title", Title);
 		//put("image", image);
@@ -60,23 +60,6 @@ public class Food{
 	}
 	public void setType(FoodType type) {
 		this.type = type;
-	}
-	
-	
-	public static ArrayList<Food> getFoodMenu(){
-		ArrayList<Food> fList = new ArrayList<Food>();
-		fList.add(new Food("PineApple Upside Downside Cheesecake","CheeseCake", "cheesecake", FoodType.DESSERT ));
-		fList.add(new Food("Samosa","Samosa", "cheesecake", FoodType.APPETIZER ));
-		fList.add(new Food("Mysore Dosa","Mysore Dosa", "cheesecake", FoodType.ENTREE ));
-		fList.add(new Food("ShockTop","Belgium Ale", "cheesecake", FoodType.BEVERAGE ));
-		
-		
-		fList.add(new Food("Bite-Sized Burgers on Mini-Buns Served with Grilled Onions, Pickles and Ketchup.", "Roadside Sliders", "cheesecake", FoodType.APPETIZER));
-		fList.add(new Food("A Rich Parmesan Cream Sauce. Available with Chicken..", "Fettuccini Alfredo", "cheesecake", FoodType.ENTREE));
-		fList.add(new Food("Italian Custard Made with Mascarpone, Whipped Cream, Lady Fingers, Marsala and Coffee Liqueur. Topped with Whipped Cream and Ground Chocolate..", "Tiramisu", "cheesecake", FoodType.DESSERT));
-		fList.add(new Food("Rum and Tropical Juices Topped with Myer's and Kraken Rums .", "Mai Tai", "cheesecake", FoodType.BEVERAGE));
-		
-		return fList;
 	}
 	
 	
