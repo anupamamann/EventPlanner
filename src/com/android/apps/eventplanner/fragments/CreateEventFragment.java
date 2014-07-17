@@ -97,7 +97,7 @@ public class CreateEventFragment extends DialogFragment{
 				String dateString = tvCurrentDate.getText().toString();
 				Date date = new Date();
 				try {
-					date = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(dateString);
+					date = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH).parse(dateString);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
