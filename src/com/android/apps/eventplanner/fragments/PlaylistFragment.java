@@ -24,9 +24,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.android.apps.eventplanner.MusicActivity;
 import com.android.apps.eventplanner.PlaylistArrayAdapter;
 import com.android.apps.eventplanner.R;
 import com.android.apps.eventplanner.models.Song;
+import com.android.apps.eventplanner.utils.Constants.EventType;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -47,9 +49,8 @@ public class PlaylistFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		//playList=Song.getSongs();
 		
-		
-		
-		String searchTerm="Party";
+		EventType type = ((MusicActivity) getActivity()).getEventType();
+		String searchTerm =type.name().toLowerCase();
 		
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		
