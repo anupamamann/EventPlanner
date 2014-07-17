@@ -37,7 +37,8 @@ public class PlaylistFragment extends Fragment {
 	PlaylistArrayAdapter fAdapter;
 	ListView lvSongs;
 	final MediaPlayer mediaPlayer = new MediaPlayer();
-	
+	String user="";
+	String playListId="";
 
 	
 	@Override
@@ -176,51 +177,105 @@ public class PlaylistFragment extends Fragment {
 		mediaPlayer.prepareAsync(); 
 	}
 	
-	public void createPlaylist(){
-		
-		getAuth();
-	}
+	
 	
 	public void addSong(String accessToken){
+	
 		
-		  String url = "https://api.spotify.com/v1/users/n.siddharth/playlists/38V869368rMtEeXUGy5C1L/tracks"; 
-		 AsyncHttpClient client = new AsyncHttpClient();
-         //client.addHeader(arg0, arg1);
-        client.addHeader("Authorization", "Bearer " +accessToken);
-        //String json ="{\"name\":\"A New Playlist\", \"public\":false}"; 
-        JSONObject json = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put("spotify:track:4iV5W9uYEdYUVa79Axb7Rh");
-        jsonArray.put("spotify:track:1301WleyT98MSxVHPZCA6M");
-        
-        for(Song s : playList)
-        {
-        	jsonArray.put(s.getUri());
-        }
-        
-        try {
-			json.accumulate("name", "ANother Playlist");
-			json.accumulate("public", Boolean.FALSE);
-		} catch (JSONException e1) {
+		
+		  String userid="";
+		
+		  userid = getUserId(accessToken);
+		  
+		  try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-        
-        
-        
-        
-        StringEntity entity=null;
-		try {
-			entity = new StringEntity(jsonArray.toString(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
+		  Log.d("userinfo", user);
+		  
+		//  String playId = createEmptyPlaylist(user, accessToken);
+		  try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-        entity.setContentType("application/json");
-         //client.post(context, url, entity, "application/json", responseHandler);
-        client.post(getActivity().getApplicationContext(), url, entity, "application/json", new JsonHttpResponseHandler(){
+			e1.printStackTrace();
+		}
+		  Log.d("playinfo", playListId);
+		     
 
-			@Override
+		 
+		
+		 
+	}
+	
+	
+	public void addTracks(String userid, String playListId, String accessToken){
+		
+		  String url = "https://api.spotify.com/v1/users/"+userid+ "/playlists/"+playListId+"/tracks"; 
+			 AsyncHttpClient client = new AsyncHttpClient();
+	         //client.addHeader(arg0, arg1);
+	        client.addHeader("Authorization", "Bearer " +accessToken);
+	        //String json ="{\"name\":\"A New Playlist\", \"public\":false}"; 
+	        
+	        JSONArray jsonArray = new JSONArray();
+	        //jsonArray.put("spotify:track:4iV5W9uYEdYUVa79Axb7Rh");
+	        //jsonArray.put("spotify:track:1301WleyT98MSxVHPZCA6M");
+	        
+	        for(Song s : playList)
+	        {
+	        	jsonArray.put(s.getUri());
+	        }
+	       
+	        
+	        
+	        
+	        
+	        StringEntity entity=null;
+			try {
+				entity = new StringEntity(jsonArray.toString(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
+	        entity.setContentType("application/json");
+	         //client.post(context, url, entity, "application/json", responseHandler);
+	        client.post(getActivity().getApplicationContext(), url, entity, "application/json", new JsonHttpResponseHandler(){
+
+				@Override
+				public void onFailure(Throwable arg0, JSONObject jsonRes) {
+					// TODO Auto-generated method stub
+					Log.d("INFO", jsonRes.toString());
+					super.onFailure(arg0, jsonRes);
+				}
+
+				@Override
+				public void onSuccess(JSONObject arg0) {
+					// TODO Auto-generated method stub
+					Log.d("INFO", "success from adding tracks");
+					super.onSuccess(arg0);
+				}
+	     	   
+	     	   
+	        });
+	         
+	      
+
+	}
+	
+	public String getUserId(final String accessToken)
+	{
+		
+		 String url = "https://api.spotify.com/v1/me";
+		
+		 AsyncHttpClient client = new AsyncHttpClient();
+         //client.addHeader(arg0, arg1);
+        client.addHeader("Authorization", "Bearer " +accessToken);
+		 
+        client.get(url, new JsonHttpResponseHandler(){
+        	
+        	@Override
 			public void onFailure(Throwable arg0, JSONObject jsonRes) {
 				// TODO Auto-generated method stub
 				Log.d("INFO", jsonRes.toString());
@@ -230,26 +285,87 @@ public class PlaylistFragment extends Fragment {
 			@Override
 			public void onSuccess(JSONObject arg0) {
 				// TODO Auto-generated method stub
-				Log.d("INFO", "success");
+				Log.d("INFO", arg0.toString());
+				
+				try {
+					user=arg0.getString("id");
+					createEmptyPlaylist(user, accessToken);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				super.onSuccess(arg0);
+			}
+
+        	
+        });
+		
+        return user;
+	}
+	
+	
+	public String createEmptyPlaylist(final String userid, final String accessToken){
+		
+		final String playListUrl= "https://api.spotify.com/v1/users/"+userid+"/playlists/";
+		  JSONObject json = new JSONObject();
+		  
+	        try {
+				json.accumulate("name", userid+" list" + Math.random()*100);
+				json.accumulate("public", Boolean.FALSE);
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		  
+	   	 AsyncHttpClient client = new AsyncHttpClient();
+         //client.addHeader(arg0, arg1);
+        client.addHeader("Authorization", "Bearer " +accessToken);
+        //String json ="{\"name\":\"A New Playlist\", \"public\":false}"; 
+    
+        StringEntity entity=null;
+		try {
+			entity = new StringEntity(json.toString(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+        entity.setContentType("application/json");
+         //client.post(context, url, entity, "application/json", responseHandler);
+        client.post(getActivity().getApplicationContext(), playListUrl, entity, "application/json", new JsonHttpResponseHandler(){
+
+			@Override
+			public void onFailure(Throwable arg0, JSONObject jsonRes) {
+				// TODO Auto-generated method stub
+				Log.d("INFO", jsonRes.toString());
+				super.onFailure(arg0, jsonRes);
+			}
+
+			@Override
+			public void onSuccess(JSONObject jsonRes) {
+				// TODO Auto-generated method stub
+				Log.d("INFO", "success");
+				try {
+					
+					playListId=jsonRes.getString("id");
+					addTracks(userid, playListId, accessToken);
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				super.onSuccess(jsonRes);
 			}
      	   
      	   
         });
          
       
-     
-
-		 
-		
-		 
+        return playListId;
+		  	 
+    
 	}
 	
 	
-	public void getAuth(){
-		
-		
-		
-	}
 	
 }
