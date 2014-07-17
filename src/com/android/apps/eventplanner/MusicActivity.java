@@ -2,7 +2,6 @@ package com.android.apps.eventplanner;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,14 +19,17 @@ import android.widget.Toast;
 
 import com.android.apps.eventplanner.fragments.CreateEventFragment;
 import com.android.apps.eventplanner.fragments.CreateEventFragment.CreateEventListener;
+import com.android.apps.eventplanner.fragments.DatePickerFragment.DateChangeListner;
 import com.android.apps.eventplanner.fragments.PlaylistFragment;
 import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.models.Song;
+import com.android.apps.eventplanner.utils.Constants;
+import com.android.apps.eventplanner.utils.Constants.EventType;
 import com.loopj.android.http.AsyncHttpClient;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
 
-public class MusicActivity extends FragmentActivity implements CreateEventListener {
+public class MusicActivity extends FragmentActivity implements CreateEventListener, DateChangeListner {
 
 	
 	private static final String CLIENT_ID = "65df51ff3c39489ca222f79aab263d61";
@@ -37,6 +39,8 @@ public class MusicActivity extends FragmentActivity implements CreateEventListen
     FragmentManager fm;
     Menu menu;
     MenuItem miSummary;
+    CreateEventFragment createFragment;
+    EventType eventType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,14 @@ public class MusicActivity extends FragmentActivity implements CreateEventListen
 		ft.replace(R.id.flContainer, new PlaylistFragment());
 		ft.commit();
 		
+		// getIntent Object
+		String typeFromIntent = getIntent()
+				.getStringExtra(Constants.EVENT_TYPE);
+		if (typeFromIntent != null)
+			eventType = EventType.valueOf(typeFromIntent.toUpperCase());
+		else
+			eventType = Events.getInstance().getType();
+		Log.i("EVENT MUSIC", eventType.name());
 	}
 	
 	
@@ -124,6 +136,7 @@ public boolean onPrepareOptionsMenu(Menu menu) {
 				Toast.makeText(MusicActivity.this,
 						"Added " + songs.get(0).getTitle() + " etc to event", Toast.LENGTH_LONG)
 						.show();
+				currentEvent.setType(eventType);
 	}
 	
 
@@ -146,7 +159,7 @@ public boolean onPrepareOptionsMenu(Menu menu) {
 	}
 	
 	private void openCreateNewEventDialog() {
-		CreateEventFragment createFragment = CreateEventFragment.newInstance("New Event");
+		createFragment = CreateEventFragment.newInstance("New Event");
 		createFragment.show(fm, "compose_dialog");
 	}
 
@@ -171,6 +184,18 @@ public boolean onPrepareOptionsMenu(Menu menu) {
 			}
 	    	 
 	     });
+	}
+
+	@Override
+	public void onDateSelected(String text) {
+		//CreateEventFragment frag  = (CreateEventFragment) 
+        //        getSupportFragmentManager().findFragmentById(R.id.flContainer);
+		createFragment.onDateSet(text);
+		
+	}
+	
+	public EventType getEventType() {
+		return eventType;
 	}
 	
 }	

@@ -69,8 +69,8 @@ public class VenuePhotosDialog extends DialogFragment {
 		return v;
 	}
 	
-	public void onAddVenueMap(View v) {
+	/*public void onAddVenueMap(View v) {
 		Toast.makeText(getActivity(), venue.getName(), Toast.LENGTH_SHORT).show();
-	}
+	}*/
 	
 }

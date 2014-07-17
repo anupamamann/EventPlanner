@@ -3,25 +3,26 @@ package com.android.apps.eventplanner;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.apps.eventplanner.fragments.CreateEventFragment;
+import com.android.apps.eventplanner.fragments.DatePickerFragment.DateChangeListner;
 import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.models.TodoListItem;
+import com.android.apps.eventplanner.utils.Constants;
 import com.android.apps.eventplanner.utils.Constants.EventType;
 
-public class TodoActivity extends FragmentActivity {
+public class TodoActivity extends FragmentActivity implements DateChangeListner {
 
 	ListView lvTodos;
 	TodoListArrayAdapter adapter;
@@ -30,7 +31,7 @@ public class TodoActivity extends FragmentActivity {
 	TodoListItem selectedVenue;
 	TodoListItem selectedMusic;
 	Events eventInstance;
-	
+	CreateEventFragment createFragment;
 	EventType eventType;
 	
 	@Override
@@ -39,26 +40,22 @@ public class TodoActivity extends FragmentActivity {
 		setContentView(R.layout.activity_todo);
 		todos = new ArrayList<TodoListItem>();
 		eventInstance = Events.getInstance();
+		
+		Intent i = getIntent();
+		if (i.hasExtra(Constants.EVENT_TYPE)) {
+			String eventTypeStr = i.getStringExtra(Constants.EVENT_TYPE);
+			eventType = EventType.valueOf(eventTypeStr.toUpperCase());
+		}
 				
-		//TODO get type from CategoryActivity and switch-case ladder
-		//example birthday
-		eventType = EventType.BIRTHDAY;
-		//Intent i = getIntent(); //get populated Events obj from Music/Venue activity
 		selectedFood = new TodoListItem(TodoListItem.Type.FOOD,"");
-		//if (i != null)
-		//	selectedFood.setPreview(i.getStringExtra("food"));
 		if (eventInstance != null && eventInstance.getFood() != null)
 			selectedFood.setPreview(eventInstance.getFood().getFoods().get(0).toString());
 		todos.add(selectedFood);
 		selectedMusic = new TodoListItem(TodoListItem.Type.MUSIC,"");
-		//if (i != null)
-		//	selectedMusic.setPreview(i.getStringExtra("music"));
 		if (eventInstance != null && eventInstance.getMusic() != null)
 			selectedMusic.setPreview(eventInstance.getMusic().get(0).toString());
 		todos.add(selectedMusic);
 		selectedVenue = new TodoListItem(TodoListItem.Type.VENUE,"");
-		//if (i != null)
-		//	selectedVenue.setPreview(i.getStringExtra("venue"));
 		if (eventInstance != null && eventInstance.getVenue() != null)
 			selectedVenue.setPreview(eventInstance.getVenue().getName());
 		todos.add(selectedVenue);
@@ -72,23 +69,24 @@ public class TodoActivity extends FragmentActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				TodoListItem listItem = adapter.getItem(position);
-				Toast.makeText(TodoActivity.this, "Clicked " + listItem.getHeading(),
-						Toast.LENGTH_SHORT).show();
 				Intent i = null;
 				switch (listItem.getHeading()) {
 					case FOOD:
-						i = new Intent(TodoActivity.this, EventRecomendationActivity.class); // temp
+						i = new Intent(TodoActivity.this, ItemDetailActivity.class);
 						break;
 					case VENUE:
 						i = new Intent(TodoActivity.this, VenueActivity.class);
 						break;
-					case THEME:
-						i = new Intent(TodoActivity.this, ItemDetailActivity.class); // temp
-						break;
 					case MUSIC:
 						i = new Intent(TodoActivity.this, MusicActivity.class);
+						break;
+					default:
+					Toast.makeText(TodoActivity.this, "Under construction",
+							Toast.LENGTH_SHORT).show();
 				}
-				startActivityForResult(i, 50);
+				if (eventType != null)
+					i.putExtra(Constants.EVENT_TYPE, eventType.name());
+				startActivity(i);
 			}
 			
 		});
@@ -120,6 +118,11 @@ public class TodoActivity extends FragmentActivity {
 	private void openCreateNewEventDialog() {
 		CreateEventFragment createFragment = CreateEventFragment.newInstance("New Event");
 		createFragment.show(this.getSupportFragmentManager(), "compose_dialog");
+	}
+
+	@Override
+	public void onDateSelected(String text) {
+		createFragment.onDateSet(text);
 	}
 
 }

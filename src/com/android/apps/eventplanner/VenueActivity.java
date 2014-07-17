@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,21 +20,26 @@ import android.widget.Toast;
 import com.android.apps.eventplanner.VenuePhotosDialog.MapViewFragmentListener;
 import com.android.apps.eventplanner.fragments.CreateEventFragment;
 import com.android.apps.eventplanner.fragments.CreateEventFragment.CreateEventListener;
+import com.android.apps.eventplanner.fragments.DatePickerFragment.DateChangeListner;
 import com.android.apps.eventplanner.fragments.ListViewFragment;
 import com.android.apps.eventplanner.fragments.ListViewFragment.ListViewFragmentListener;
 import com.android.apps.eventplanner.fragments.MapViewFragment;
 import com.android.apps.eventplanner.listeners.FragmentTabListener;
 import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.models.Venue;
+import com.android.apps.eventplanner.utils.Constants;
+import com.android.apps.eventplanner.utils.Constants.EventType;
 
 public class VenueActivity extends FragmentActivity implements
-		ListViewFragmentListener, MapViewFragmentListener, CreateEventListener {
+		ListViewFragmentListener, MapViewFragmentListener, CreateEventListener, DateChangeListner {
 	
 	VenueListArrayAdapter adapter;
 	Venue venue;
 	FragmentManager fm;
 	Menu menu;
 	MenuItem miSummary;
+	CreateEventFragment createFragment;
+	EventType eventType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) { 
@@ -42,6 +48,15 @@ public class VenueActivity extends FragmentActivity implements
 		
 		setupTabs();
 		fm = getSupportFragmentManager();
+		
+		// getIntent Object
+		String typeFromIntent = getIntent()
+				.getStringExtra(Constants.EVENT_TYPE);
+		if (typeFromIntent != null)
+			eventType = EventType.valueOf(typeFromIntent.toUpperCase());
+		else
+			eventType = Events.getInstance().getType();
+		Log.i("EVENT", eventType.name());
 	}
 
 	private void setupTabs() {
@@ -116,6 +131,10 @@ public class VenueActivity extends FragmentActivity implements
 		this.venue = v;
 	}
 	
+	public EventType getEventType() {
+		return eventType;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -153,6 +172,7 @@ public class VenueActivity extends FragmentActivity implements
 		Toast.makeText(VenueActivity.this,
 				"Added " + venue.getName() + " to event", Toast.LENGTH_LONG)
 				.show();
+		Events.getInstance().setType(eventType);
 	}
 	
 	public void onCreateNewEvent(MenuItem mi) {
@@ -174,7 +194,7 @@ public class VenueActivity extends FragmentActivity implements
 	}
 	
 	private void openCreateNewEventDialog() {
-		CreateEventFragment createFragment = CreateEventFragment.newInstance("New Event");
+		createFragment = CreateEventFragment.newInstance("New Event");
 		createFragment.show(fm, "compose_dialog");
 	}
 
@@ -203,6 +223,11 @@ public class VenueActivity extends FragmentActivity implements
 				}
 		    	 
 		     });
+	}
+
+	@Override
+	public void onDateSelected(String text) {
+		createFragment.onDateSet(text);
 	}
 
 

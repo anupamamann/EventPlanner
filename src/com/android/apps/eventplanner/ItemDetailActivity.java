@@ -121,9 +121,10 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		//based on the item in to do ..pull up the fragment to display
 		//I'm pulling foodMenu fragment as of now
 		
-		//getIntent Object 
-		Log.d("intent", getIntent().getStringExtra(Constants.EVENT_TYPE));
-		EventType eType = EventType.BIRTHDAY;		
+		//getIntent Object
+		String typeFromIntent = getIntent().getStringExtra(Constants.EVENT_TYPE);
+		Log.i("EVENT", typeFromIntent);
+		final EventType eType = EventType.valueOf(typeFromIntent.toUpperCase());
 		
 		
 		//getFood for given Event
@@ -198,7 +199,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 					}
 					
 					Toast.makeText(ItemDetailActivity.this, ((FoodMenuFragment)selectedFragment).getFood().getUrls().toString(), Toast.LENGTH_LONG).show();
-					
+					Events.getInstance().setType(eType);
 				}
 			});
 		 
@@ -278,10 +279,9 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 
 	@Override
 	public void onDateSelected(String text) {
-		// TODO Auto-generated method stub
 		//call other fragment and send date selected
-		CreateEventFragment frag  = (CreateEventFragment) 
-                getSupportFragmentManager().findFragmentById(R.id.flContainer);
+		//CreateEventFragment frag  = (CreateEventFragment) 
+        //        getSupportFragmentManager().findFragmentById(R.id.flContainer);
 		createFragment.onDateSet(text);
 		
 	}
