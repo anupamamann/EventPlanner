@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/white1">
+
+    <ListView
+        android:id="@+id/lvPlayList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btCreate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvPlayListTitle"
+        android:layout_margin="10dp"
+        android:fadeScrollbars="false"
+        android:padding="2dp"
+        android:scrollbars="vertical" />
+
+    
+
+    <Button
+        android:id="@+id/btCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="createPlaylist"
+        android:text="createPlaylist" />
 
     <TextView
         android:id="@+id/tvPlayListTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PlayList" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="PlayList"
+        android:textStyle="bold|italic" />
 
-    <ListView
-        android:id="@+id/lvPlayList"
-        android:layout_width="wrap_content"
-        android:layout_height="393dp" >
-    </ListView>
-
-    <Button
-        android:id="@+id/btCreate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.96"
-        android:onClick="createPlaylist"
-        android:text="createPlaylist" />
-
-</LinearLayout>
+</RelativeLayout>
