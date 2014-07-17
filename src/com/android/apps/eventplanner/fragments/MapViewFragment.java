@@ -36,7 +36,9 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -52,6 +54,7 @@ public class MapViewFragment extends Fragment implements
 	private View mapView;
 	private FragmentActivity myContext;
 	private Map<Venue, Marker> venueMarkerMap;
+	private Venue selectedVenue;
 	
 	/*
 	 * Define a request code to send to Google Play services This code is
@@ -106,17 +109,17 @@ public class MapViewFragment extends Fragment implements
 
 			@Override
 			public void onInfoWindowClick(Marker m) {
-				Venue venue = new Venue(m.getTitle(), "map-address", 20);
+				selectedVenue = new Venue(m.getTitle(), "map-address", 20);
 				VenuePhotosDialog overlay = VenuePhotosDialog
-						.newInstance(venue);
-				//MapViewFragmentListener listener = (MapViewFragmentListener) getActivity();
-				//listener.passVenue(venue);
+						.newInstance(selectedVenue);
+				MapViewFragmentListener listener = (MapViewFragmentListener) getActivity();
+				listener.passVenue(selectedVenue);
+				m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 				overlay.show(fm, "venue_pics");
-
 			}
 			
 		});
-		
+
 	}
 	
 	/*

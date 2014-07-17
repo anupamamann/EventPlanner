@@ -1,26 +1,39 @@
 package com.android.apps.eventplanner;
 
 import android.app.ActionBar;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.widget.Toast;
 
+import com.android.apps.eventplanner.VenuePhotosDialog.MapViewFragmentListener;
+import com.android.apps.eventplanner.fragments.CreateEventFragment;
+import com.android.apps.eventplanner.fragments.CreateEventFragment.CreateEventListener;
 import com.android.apps.eventplanner.fragments.ListViewFragment;
 import com.android.apps.eventplanner.fragments.ListViewFragment.ListViewFragmentListener;
 import com.android.apps.eventplanner.fragments.MapViewFragment;
 import com.android.apps.eventplanner.listeners.FragmentTabListener;
-import com.android.apps.eventplanner.VenuePhotosDialog.MapViewFragmentListener;
+import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.models.Venue;
 
 public class VenueActivity extends FragmentActivity implements
-		ListViewFragmentListener, MapViewFragmentListener {
+		ListViewFragmentListener, MapViewFragmentListener, CreateEventListener {
 	
 	VenueListArrayAdapter adapter;
 	Venue venue;
+	FragmentManager fm;
+	Menu menu;
+	MenuItem miSummary;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) { 
@@ -28,7 +41,7 @@ public class VenueActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_venue);
 		
 		setupTabs();
-
+		fm = getSupportFragmentManager();
 	}
 
 	private void setupTabs() {
@@ -101,6 +114,95 @@ public class VenueActivity extends FragmentActivity implements
 	@Override
 	public void passVenue(Venue v) {
 		this.venue = v;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_univ, menu);
+        this.menu = menu;
+        return true;
+	}
+	
+	@Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(Events.getInstance() != null && miSummary == null) {
+            alterMenu();
+        }
+        return true;
+    }
+	
+	public void onSave(MenuItem mi) {
+		// simple implementation
+		/*Intent i = new Intent(this, TodoActivity.class);
+		Events.getInstance().setVenue(venue);
+		//i.putExtra("venue", venue.getName());
+		startActivity(i);*/
+		
+		// better implementation
+		//save object into current event
+		Events currentEvent = Events.getInstance();
+		if(currentEvent == null){
+			//open dialog to notify and create event
+			openCreateNewEventDialog();
+			alterMenu();
+		} else {
+			currentEvent.setVenue(venue);
+			showEventCreatedDialog("Item saved to " + currentEvent.getName());
+		}
+		Toast.makeText(VenueActivity.this,
+				"Added " + venue.getName() + " to event", Toast.LENGTH_LONG)
+				.show();
+	}
+	
+	public void onCreateNewEvent(MenuItem mi) {
+		openCreateNewEventDialog();
+	}
+	
+	public void showEventCreatedDialog(String message){
+		AlertDialog.Builder alertNotification = new AlertDialog.Builder(this);
+		alertNotification.setTitle(message);
+		alertNotification.setCancelable(true);
+		alertNotification.setPositiveButton("ok", new DialogInterface.OnClickListener(){
+	            public void onClick(DialogInterface dialog, int which) {
+	            	dialog.dismiss();
+	            }
+
+	        });
+		alertNotification.create();
+	     alertNotification.show();
+	}
+	
+	private void openCreateNewEventDialog() {
+		CreateEventFragment createFragment = CreateEventFragment.newInstance("New Event");
+		createFragment.show(fm, "compose_dialog");
+	}
+
+	@Override
+	public void onEventCreate(String eventName) {
+		Toast.makeText(this, "New event:" + eventName + " created!", Toast.LENGTH_SHORT).show();
+	}
+	
+	public void onSummary(MenuItem mi) {
+		Intent i = new Intent(this, TodoActivity.class);
+		startActivity(i);
+	}
+	
+	private void alterMenu() {
+		 menu.removeItem(R.id.miCreateNewEvent);
+	     miSummary = menu.add("Summary");
+	     miSummary.setIcon(R.drawable.ic_saved_events);
+	     miSummary.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	     miSummary.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					Intent i = new Intent(VenueActivity.this, TodoActivity.class);
+					startActivity(i);
+					return true;
+				}
+		    	 
+		     });
 	}
 
 

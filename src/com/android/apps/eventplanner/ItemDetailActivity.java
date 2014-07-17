@@ -4,6 +4,7 @@ package com.android.apps.eventplanner;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,14 +13,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.apps.eventplanner.fragments.CreateEventFragment;
-import com.android.apps.eventplanner.fragments.PlaylistFragment;
 import com.android.apps.eventplanner.fragments.CreateEventFragment.CreateEventListener;
 import com.android.apps.eventplanner.fragments.DatePickerFragment.DateChangeListner;
 import com.android.apps.eventplanner.fragments.FoodMenuFragment;
@@ -38,6 +40,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	ImageButton btPrevious;
 	TextView tvNotification;
 	CreateEventFragment createFragment;
+	Menu menu;
 	
 	
 	public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter  {
@@ -218,27 +221,44 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 			});
 		
 	}
-	
-	
-	public void saveItemToEvent(){
-		
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		//getMenuInflater().inflate(R.menu.menu_todo, menu);
+		this.menu = menu;
 		return true;
-	}
-	
-	public void onBack(View v) {
-		Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
-		
 	}
 	
 	@Override
 	public void onEventCreate(String eventName) {
 		// TODO Auto-generated method stub
 		showEventCreatedDialog("Event " + eventName +" created");
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (Events.getInstance() != null) {
+			menu.removeItem(R.id.miCreateNewEvent);
+		}
+		return true;
+	}
+
+	
+	private void alterMenu() {
+		 menu.removeItem(R.id.miCreateNewEvent);
+	     MenuItem mi2 = menu.add("Summary");
+	     mi2.setIcon(R.drawable.ic_saved_events);
+	     mi2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	     mi2.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					Intent i = new Intent(ItemDetailActivity.this, TodoActivity.class);
+					startActivity(i);
+					return true;
+				}
+		    	 
+		     });
 	}
 	
 	public void showEventCreatedDialog(String message){
@@ -265,5 +285,48 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		createFragment.onDateSet(text);
 		
 	}
+	
+	public void onSave(MenuItem mi) {
+		// TODO Auto-generated method stub
+		// get FoodList
+		Fragment selectedFragment = adapterViewPager
+				.getRegisteredFragment(vpPager.getCurrentItem());
+
+		// save object into current event
+		Events currentEvent = Events.getInstance();
+		if (currentEvent == null) {
+			// open dialog to notify and create event
+			FragmentManager fm = getSupportFragmentManager();
+			CreateEventFragment createFragment = CreateEventFragment
+					.newInstance("New Event");
+			createFragment.show(fm, "compose_dialog");
+			alterMenu();
+
+		} else {
+			if (selectedFragment instanceof FoodMenuFragment) {
+				currentEvent.setFood(((FoodMenuFragment) selectedFragment)
+						.getFood());
+				showEventCreatedDialog("Item saved to "
+						+ currentEvent.getName());
+
+			}
+			/*
+			 * else if(selectedFragment instanceof MusicFragment){
+			 * currentEvent.setMusic
+			 * (((MusicFragment)selectedFragment).getPlaylist()); }
+			 */
+		}
+
+		Toast.makeText(
+				ItemDetailActivity.this,
+				((FoodMenuFragment) selectedFragment).getFood().getUrls()
+						.toString(), Toast.LENGTH_LONG).show();
+	}
+		
+		       public void onCreateNewEvent(MenuItem mi) {
+		               Toast.makeText(this, "NEW", Toast.LENGTH_SHORT).show();
+		
+		        }
+
 	
 }
