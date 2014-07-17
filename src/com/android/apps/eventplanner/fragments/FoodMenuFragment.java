@@ -157,7 +157,7 @@ public class FoodMenuFragment extends Fragment {
 		super.onCreateOptionsMenu(menu, inflater);
 		mMenu = menu;
 		
-		inflater.inflate(R.menu.menu_todo, menu);
+		inflater.inflate(R.menu.menu_univ, menu);
 	}
 	
 	
@@ -166,13 +166,13 @@ public class FoodMenuFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	   // handle item selection
 	   switch (item.getItemId()) {
-	      case R.id.miAdd:
+	      case R.id.miCreateNewEvent:
 	          Toast.makeText(getActivity(), "Open create dialog", Toast.LENGTH_SHORT).show();
 	          //
 	          
 	          //disable Add button
 	          if(mMenu != null){
-	        	  mMenu.findItem(R.id.miAdd).setVisible(false);
+	        	  mMenu.findItem(R.id.miCreateNewEvent).setVisible(false);
 	          }
 	         return true;
 	      default:

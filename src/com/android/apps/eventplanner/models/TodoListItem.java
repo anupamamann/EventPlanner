@@ -4,6 +4,7 @@ import com.android.apps.eventplanner.R;
 
 public class TodoListItem {
 	
+	
 	private Type heading;
 	private String preview;
 	private int icon;
@@ -44,5 +45,8 @@ public class TodoListItem {
 	}
 	public int getIcon() {
 		return icon;
+	}
+	public void setPreview(String preview) {
+		this.preview = preview;
 	}
 }

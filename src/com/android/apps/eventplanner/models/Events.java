@@ -32,7 +32,7 @@ public class Events extends ParseObject implements Serializable{
 	private FoodMenu food;
 	private Theme theme;
 	private Venue venue;
-	private MusicPlaylist music;
+	private ArrayList<Song> music;
 	private List<Guest> guests;
 	
 
@@ -150,12 +150,12 @@ public class Events extends ParseObject implements Serializable{
 	}
 
 
-	public MusicPlaylist getMusic() {
+	public ArrayList<Song> getMusic() {
 		return music;
 	}
 
 
-	public void setMusic(MusicPlaylist music) {
+	public void setMusic(ArrayList<Song> music) {
 		this.music = music;
 	}
 

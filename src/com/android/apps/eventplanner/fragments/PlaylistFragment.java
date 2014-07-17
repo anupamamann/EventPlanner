@@ -368,4 +368,8 @@ public class PlaylistFragment extends Fragment {
 	
 	
 	
+	public ArrayList<Song> getPlaylist() {
+		return playList;
+	}
+	
 }
