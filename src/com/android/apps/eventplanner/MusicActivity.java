@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.apps.eventplanner.fragments.CreateEventFragment;
+import com.android.apps.eventplanner.fragments.FoodMenuFragment;
 import com.android.apps.eventplanner.fragments.CreateEventFragment.CreateEventListener;
 import com.android.apps.eventplanner.fragments.DatePickerFragment.DateChangeListner;
 import com.android.apps.eventplanner.fragments.PlaylistFragment;
@@ -115,28 +117,23 @@ public boolean onPrepareOptionsMenu(Menu menu) {
 	public void onSave(MenuItem mi) {
 		PlaylistFragment playFrag = (PlaylistFragment) fm.findFragmentById(R.id.flContainer);
 		ArrayList<Song> songs = playFrag.getPlaylist();
-		//simple implementation
-		/*Intent i = new Intent(this, TodoActivity.class);
-		Events.getInstance().setMusic(songs);
-		//i.putExtra("music", songs.get(0).getTitle() + ","
-		//		+ songs.get(1).getTitle() + "," + songs.get(2).getTitle());
-		startActivity(i);*/
-		
-		//better implementation
-		//save object into current event
-				Events currentEvent = Events.getInstance();
-				if(currentEvent == null){
-					//open dialog to notify and create event
-					openCreateNewEventDialog();
-					alterMenu();
-				} else {
+	
+				// save object into current event
+		Events currentEvent = Events.getInstance();
+		if (currentEvent == null) {
+			// open dialog to notify and create event
+			openCreateNewEventDialog();
+			alterMenu();
+
+		} else {
 					currentEvent.setMusic(songs);
 					showEventCreatedDialog("Item saved to " + currentEvent.getName());
 				}
-				Toast.makeText(MusicActivity.this,
-						"Added " + songs.get(0).getTitle() + " etc to event", Toast.LENGTH_LONG)
-						.show();
-				currentEvent.setType(eventType);
+				//Toast.makeText(MusicActivity.this,
+					//	"Added " + songs.get(0).getTitle() + " etc to event", Toast.LENGTH_LONG)
+						//.show();
+				
+				
 	}
 	
 
@@ -159,13 +156,17 @@ public boolean onPrepareOptionsMenu(Menu menu) {
 	}
 	
 	private void openCreateNewEventDialog() {
-		createFragment = CreateEventFragment.newInstance("New Event");
+		FragmentManager fm = getSupportFragmentManager();
+		createFragment = CreateEventFragment
+				.newInstance("New Event");
 		createFragment.show(fm, "compose_dialog");
+		
 	}
 
 	@Override
 	public void onEventCreate(String eventName) {
-		Toast.makeText(this, "New event:" + eventName + " created!", Toast.LENGTH_SHORT).show();
+		showEventCreatedDialog("Event " + eventName +" created");
+		//Toast.makeText(this, "New event:" + eventName + " created!", Toast.LENGTH_SHORT).show();
 	}
 
 	

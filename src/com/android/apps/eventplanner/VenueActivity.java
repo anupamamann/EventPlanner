@@ -194,13 +194,15 @@ public class VenueActivity extends FragmentActivity implements
 	}
 	
 	private void openCreateNewEventDialog() {
+		FragmentManager fm = getSupportFragmentManager();
 		createFragment = CreateEventFragment.newInstance("New Event");
 		createFragment.show(fm, "compose_dialog");
 	}
 
 	@Override
 	public void onEventCreate(String eventName) {
-		Toast.makeText(this, "New event:" + eventName + " created!", Toast.LENGTH_SHORT).show();
+		showEventCreatedDialog("Event " + eventName +" created");
+		//Toast.makeText(this, "New event:" + eventName + " created!", Toast.LENGTH_SHORT).show();
 	}
 	
 	public void onSummary(MenuItem mi) {
