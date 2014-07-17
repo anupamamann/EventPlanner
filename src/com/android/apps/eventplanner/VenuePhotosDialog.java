@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.apps.eventplanner.models.Venue;
+import com.android.apps.eventplanner.utils.Constants.EventType;
 import com.android.apps.eventplanner.utils.GoogleClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -64,7 +65,7 @@ public class VenuePhotosDialog extends DialogFragment {
 		lvVenuePics.setAdapter(imageAdapter);
 		
 		GoogleClient gClient = EventApplication.getClient();
-		gClient.getImages(imageAdapter);
+		gClient.getImages(imageAdapter, EventType.BIRTHDAY);
 		// TODO set dismiss on lose focus
 		return v;
 	}

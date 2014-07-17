@@ -39,9 +39,9 @@ public class GoogleClient {
     	client.get(REST_URL, params, handler); //pass null for params if no params
     }
 	
-	public void getImages(final ImageResultsArrayAdapter imageAdapter) {
+	public void getImages(final ImageResultsArrayAdapter imageAdapter, EventType query) {
 		String url = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8&"
-				+ "&v=1.0&q=" + Uri.encode("Birthday hall");
+				+ "&v=1.0&q=" + Uri.encode(query.name().toLowerCase() + " hall");
 		
 		client.get(url, new JsonHttpResponseHandler() {
 			@Override

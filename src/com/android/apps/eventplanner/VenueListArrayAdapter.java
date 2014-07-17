@@ -22,6 +22,7 @@ public class VenueListArrayAdapter extends ArrayAdapter<Venue> {
 	private int selectedPosition = 0;
 
 	private static class ViewHolder {
+		TextView tvVenueName;
 		TextView tvVenueAddress;
 		TextView tvVenueCapacity;
 		LinearLayout llVenuePhotos;
@@ -52,6 +53,7 @@ public class VenueListArrayAdapter extends ArrayAdapter<Venue> {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		// Populate the data into the template view using the data object
+		viewHolder.tvVenueName.setText(v.getName());
 		viewHolder.tvVenueAddress.setText(v.getAddress());
 		viewHolder.tvVenueCapacity.setText(v.getCapacity() + "");
 		List<String> venuePhotoUrls = v.getPhotos();
@@ -79,6 +81,7 @@ public class VenueListArrayAdapter extends ArrayAdapter<Venue> {
 	}
 
 	private void setupViews(ViewHolder viewHolder, View convertView) {
+		viewHolder.tvVenueName = (TextView) convertView.findViewById(R.id.tvVenueName);
 		viewHolder.tvVenueAddress = (TextView) convertView
 				.findViewById(R.id.tvVenueAddress);
 		viewHolder.tvVenueCapacity = (TextView) convertView

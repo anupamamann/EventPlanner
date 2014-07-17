@@ -31,6 +31,7 @@ public class ListViewFragment extends Fragment {
 	
 	public interface ListViewFragmentListener {
 		void passAdapter(VenueListArrayAdapter adapter);
+		
 	}
 	
 	@Override
@@ -48,10 +49,20 @@ public class ListViewFragment extends Fragment {
 		//dummy venues
 		Venue v1 = new Venue("myVenue1", "100 Road, Sunnyvale", 100);
 		populatePhotos(v1.getPhotos());
-		Venue v2 = new Venue("myVenue2", "200 Road, Sunnyvale", 200);
 		venues.add(v1);
+		Venue v2 = new Venue("myVenue2", "200 Road, Sunnyvale", 200);
+		populatePhotos(v1.getPhotos());
 		venues.add(v2);
-		
+		Venue v3 = new Venue("myVenue3", "200 Road, Sunnyvale", 200);
+		Venue v4 = new Venue("myVenue4", "200 Road, Sunnyvale", 200);
+		Venue v5 = new Venue("myVenue5", "200 Road, Sunnyvale", 200);
+		Venue v6 = new Venue("myVenue6", "200 Road, Sunnyvale", 200);
+		Venue v7 = new Venue("myVenue7", "200 Road, Sunnyvale", 200);
+		venues.add(v3);
+		venues.add(v4);
+		venues.add(v5);
+		venues.add(v6);
+		venues.add(v7);
 	}
 	
 	@Override

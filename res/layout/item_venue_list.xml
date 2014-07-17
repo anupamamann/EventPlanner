@@ -11,7 +11,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
-        android:text="Name:" />
+        android:text="Name:"
+        android:fontFamily="sans-serif-light" />
     
     <TextView
         android:id="@+id/tvVenueName"
@@ -20,7 +21,8 @@
         android:layout_alignTop="@+id/tvVenueNameLabel"
         android:layout_marginLeft="40dp"
         android:layout_toRightOf="@+id/tvVenueNameLabel"
-        android:text="TextView" />
+        android:text="TextView"
+        android:fontFamily="sans-serif-light" />
     
     <TextView
         android:id="@+id/tvVenueAddressLabel"
@@ -28,8 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvVenueNameLabel"
         android:layout_below="@+id/tvVenueNameLabel"
-        android:layout_marginTop="15dp"
-        android:text="Address:" />
+        android:layout_marginTop="5dp"
+        android:text="Address:"
+        android:fontFamily="sans-serif-light" />
 
     <TextView
         android:id="@+id/tvVenueAddress"
@@ -37,7 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvVenueAddressLabel"
         android:layout_alignLeft="@+id/tvVenueName"
-        android:text="TextView" />
+        android:text="TextView"
+        android:fontFamily="sans-serif-light" />
 
     <TextView
         android:id="@+id/tvVenueCapacityLabel"
@@ -45,8 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvVenueNameLabel"
         android:layout_below="@+id/tvVenueAddressLabel"
-        android:layout_marginTop="15dp"
-        android:text="Capacity:" />
+        android:layout_marginTop="5dp"
+        android:text="Capacity:"
+        android:fontFamily="sans-serif-light" />
     
     <TextView
         android:id="@+id/tvVenueCapacity"
@@ -54,23 +59,25 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvVenueCapacityLabel"
         android:layout_alignLeft="@+id/tvVenueName"
-        android:text="TextView" />
+        android:text="TextView"
+        android:fontFamily="sans-serif-light" />
 
     <TextView
         android:id="@+id/tvVenuePhotosLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvVenueCapacityLabel"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/tvVenueNameLabel"
-        android:text="Photos:" />
+        android:text="Photos:"
+        android:fontFamily="sans-serif-light" />
 
     <HorizontalScrollView
         android:id="@+id/hsvVenuePhotos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvVenuePhotosLabel"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" >
 
