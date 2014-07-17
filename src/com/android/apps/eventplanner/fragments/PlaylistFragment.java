@@ -247,7 +247,7 @@ public class PlaylistFragment extends Fragment {
 				@Override
 				public void onFailure(Throwable arg0, JSONObject jsonRes) {
 					// TODO Auto-generated method stub
-					Log.d("INFO", jsonRes.toString());
+					Log.d("INFO", arg0.getMessage());
 					super.onFailure(arg0, jsonRes);
 				}
 
