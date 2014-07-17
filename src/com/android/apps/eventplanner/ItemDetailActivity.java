@@ -42,6 +42,8 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	TextView tvNotification;
 	CreateEventFragment createFragment;
 	Menu menu;
+	MenuItem miSummary;
+	EventType eventType;
 	
 	
 	public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter  {
@@ -122,10 +124,18 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		//based on the item in to do ..pull up the fragment to display
 		//I'm pulling foodMenu fragment as of now
 		
-		//getIntent Object
-		String typeFromIntent = getIntent().getStringExtra(Constants.EVENT_TYPE);
-		Log.i("EVENT", typeFromIntent);
-		final EventType eType = EventType.valueOf(typeFromIntent.toUpperCase());
+		// getIntent Object
+				String typeFromIntent = getIntent()
+						.getStringExtra(Constants.EVENT_TYPE);
+				if (typeFromIntent != null)
+					eventType = EventType.valueOf(typeFromIntent.toUpperCase());
+				else
+					eventType = Events.getInstance().getType();
+				Log.i("EVENT", eventType.name());
+				EventType eType = null;
+				if (typeFromIntent != null) {
+					eType = EventType.valueOf(typeFromIntent.toUpperCase());
+				}
 		
 		
 		//getFood for given Event
@@ -213,19 +223,22 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		if (Events.getInstance() != null) {
+		if(Events.getInstance() != null && miSummary == null) {
+            alterMenu();
+        }
+		/*if (Events.getInstance() != null) {
 			menu.removeItem(R.id.miCreateNewEvent);
-		}
+		}*/
 		return true;
 	}
 
 	
 	private void alterMenu() {
 		 menu.removeItem(R.id.miCreateNewEvent);
-	     MenuItem mi2 = menu.add("Summary");
-	     mi2.setIcon(R.drawable.ic_saved_events);
-	     mi2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-	     mi2.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+	     miSummary = menu.add("Summary");
+	     miSummary.setIcon(R.drawable.ic_saved_events);
+	     miSummary.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	     miSummary.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {

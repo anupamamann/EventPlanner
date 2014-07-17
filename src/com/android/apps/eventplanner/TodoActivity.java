@@ -49,11 +49,18 @@ public class TodoActivity extends FragmentActivity implements DateChangeListner 
 				
 		selectedFood = new TodoListItem(TodoListItem.Type.FOOD,"");
 		if (eventInstance != null && eventInstance.getFood() != null)
-			selectedFood.setPreview(eventInstance.getFood().getFoods().get(0).toString());
+			selectedFood.setPreview(eventInstance.getFood().getFoods().get(0)
+					.getTitle()
+					+ ", "
+					+ eventInstance.getFood().getFoods().get(1).getTitle()
+					+ ", "
+					+ eventInstance.getFood().getFoods().get(2).getTitle());
 		todos.add(selectedFood);
 		selectedMusic = new TodoListItem(TodoListItem.Type.MUSIC,"");
 		if (eventInstance != null && eventInstance.getMusic() != null)
-			selectedMusic.setPreview(eventInstance.getMusic().get(0).toString());
+			selectedMusic.setPreview(eventInstance.getMusic().get(0).getTitle()
+					+ ", " + eventInstance.getMusic().get(1).getTitle() + ", "
+					+ eventInstance.getMusic().get(2).getTitle());
 		todos.add(selectedMusic);
 		selectedVenue = new TodoListItem(TodoListItem.Type.VENUE,"");
 		if (eventInstance != null && eventInstance.getVenue() != null)
