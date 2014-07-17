@@ -104,9 +104,13 @@ public class FoodMenu extends ParseObject implements Serializable {
 	
 	public static ArrayList<FoodMenu> getFoodMenu(EventType type){
 		ArrayList<FoodMenu> foodMenu = new ArrayList<FoodMenu>();
-		for(FoodMenu f : getFoodMenu()){
-			if(f.getEvents().toString().contains(type.toString())){
-				foodMenu.add(f);
+		if(type == null)
+			foodMenu.add(getFoodMenu().get(2));
+		else{
+			for(FoodMenu f : getFoodMenu()){
+				if(f.getEvents().toString().contains(type.toString())){
+					foodMenu.add(f);
+				}
 			}
 		}
 		return foodMenu;
@@ -116,7 +120,6 @@ public class FoodMenu extends ParseObject implements Serializable {
 		ArrayList<FoodMenu> foodMenu = new ArrayList<FoodMenu>();
 		
 		//Parse query 
-		
 		ArrayList<Food> fList = new ArrayList<Food>();
 		fList.add(new Food("Kesari Rasmalai", "Soft poached homemade cheese dumplings in a saffron flavored light milk syrup", "rasmalai",FoodType.DESSERT ));
 		fList.add(new Food("Samosa","Crisp Dumplings, Spiced Potato, Peas", "samosa", FoodType.APPETIZER ));
