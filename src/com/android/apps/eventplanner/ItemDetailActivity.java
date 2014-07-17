@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,8 +15,8 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -28,15 +29,14 @@ import com.android.apps.eventplanner.fragments.FoodMenuFragment;
 import com.android.apps.eventplanner.models.Events;
 import com.android.apps.eventplanner.models.FoodMenu;
 import com.android.apps.eventplanner.utils.Constants;
-import com.android.apps.eventplanner.utils.Functions;
 import com.android.apps.eventplanner.utils.Constants.EventType;
+import com.android.apps.eventplanner.utils.Functions;
 import com.android.apps.eventplanner.utils.SmartFragmentStatePagerAdapter;
 
 public class ItemDetailActivity extends FragmentActivity implements CreateEventListener, DateChangeListner {
 	SmartFragmentStatePagerAdapter adapterViewPager;
 	ViewPager vpPager;
 	
-	ImageButton btAdd;
 	ImageButton btNext;
 	ImageButton btPrevious;
 	TextView tvNotification;
@@ -109,7 +109,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		
-		btAdd = (ImageButton)findViewById(R.id.btnAdd);
+		//btAdd = (ImageButton)findViewById(R.id.btnAdd);
 		btNext = (ImageButton)findViewById(R.id.btnNext);
 		btPrevious = (ImageButton)findViewById(R.id.btnPrevious);
 		tvNotification = (TextView)findViewById(R.id.tvNotification);
@@ -172,45 +172,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	        });
 		
 		
-		 btAdd.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					//get FoodList 
-					Fragment selectedFragment = adapterViewPager.getRegisteredFragment(vpPager.getCurrentItem());
-					
-					//save object into current event
-					Events currentEvent = Events.getInstance();
-					if(currentEvent == null){
-						//open dialog to notify and create event
-						FragmentManager fm = getSupportFragmentManager();
-						createFragment = CreateEventFragment.newInstance("New Event");
-						createFragment.show(fm, "compose_dialog");
-						
-					}else{
-						if(selectedFragment instanceof FoodMenuFragment){
-							currentEvent.setFood(((FoodMenuFragment)selectedFragment).getFood());
-							showEventCreatedDialog("Item saved to " + currentEvent.getName());
-							Drawable image = (Drawable)Functions.getResource(v, "ic_after_save", Constants.DRAWABLE);
-							if(image == null){ //set a default image
-								btAdd.setImageResource(R.drawable.ic_launcher);
-							}else{
-								btAdd.setImageDrawable(image);
-							}
-							
-							
-						}
-						/*else if(selectedFragment instanceof MusicFragment){
-							currentEvent.setMusic(((MusicFragment)selectedFragment).getPlaylist());
-						}*/
-					}
-					
-					Toast.makeText(ItemDetailActivity.this, ((FoodMenuFragment)selectedFragment).getFood().getUrls().toString(), Toast.LENGTH_LONG).show();
-					Events.getInstance().setType(eType);
-				}
-			});
-		 
+		 	 
 		 btNext.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -310,7 +272,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		if (currentEvent == null) {
 			// open dialog to notify and create event
 			FragmentManager fm = getSupportFragmentManager();
-			CreateEventFragment createFragment = CreateEventFragment
+			createFragment = CreateEventFragment
 					.newInstance("New Event");
 			createFragment.show(fm, "compose_dialog");
 			alterMenu();
@@ -330,14 +292,18 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 			 */
 		}
 
-		Toast.makeText(
-				ItemDetailActivity.this,
-				((FoodMenuFragment) selectedFragment).getFood().getUrls()
-						.toString(), Toast.LENGTH_LONG).show();
+		//Toast.makeText(ItemDetailActivity.this,	((FoodMenuFragment) selectedFragment).getFood().getUrls().toString(), Toast.LENGTH_LONG).show();
 	}
 		
-		       public void onCreateNewEvent(MenuItem mi) {
-		               Toast.makeText(this, "NEW", Toast.LENGTH_SHORT).show();
+		  public void onCreateNewEvent(MenuItem mi) {
+		    	   	//open New Event Dialog
+		    	   Toast.makeText(this, "NEW", Toast.LENGTH_SHORT).show();
+		    	   FragmentManager fm = getSupportFragmentManager();
+				   createFragment = CreateEventFragment
+							.newInstance("New Event");
+					createFragment.show(fm, "compose_dialog");
+					alterMenu();
+		              
 		
 		        }
 

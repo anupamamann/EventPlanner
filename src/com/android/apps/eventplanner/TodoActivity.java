@@ -116,7 +116,7 @@ public class TodoActivity extends FragmentActivity implements DateChangeListner 
 	}
 	
 	private void openCreateNewEventDialog() {
-		CreateEventFragment createFragment = CreateEventFragment.newInstance("New Event");
+		createFragment = CreateEventFragment.newInstance("New Event");
 		createFragment.show(this.getSupportFragmentManager(), "compose_dialog");
 	}
 

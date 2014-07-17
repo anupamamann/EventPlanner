@@ -4,22 +4,15 @@
     android:orientation="vertical"
     android:background="@color/black">
  
-    <ImageButton
-        android:id="@+id/btnAdd"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:src="@drawable/ic_before_save" />
-    
     <android.support.v4.view.ViewPager
         android:id="@+id/vpPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/btnAdd"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
         android:layout_toLeftOf="@+id/btnNext"
-        android:layout_toRightOf="@+id/btnAdd"
-        android:layout_marginBottom="10dp" >
+        android:layout_toRightOf="@+id/btnPrevious" >
 
     </android.support.v4.view.ViewPager>
     
