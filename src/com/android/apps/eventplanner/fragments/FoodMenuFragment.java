@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.apps.eventplanner.R;
 import com.android.apps.eventplanner.models.Food;
@@ -190,4 +191,5 @@ public class FoodMenuFragment extends Fragment {
 	         return super.onOptionsItemSelected(item);
 	   }
 
+	}
 }
