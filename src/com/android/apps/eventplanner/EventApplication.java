@@ -37,7 +37,7 @@ public class EventApplication extends Application {
 		
 		ParseObject.registerSubclass(Events.class);
 		ParseObject.registerSubclass(EventRecommendation.class);
-		ParseObject.registerSubclass(FoodMenu.class);
+		//ParseObject.registerSubclass(FoodMenu.class);
 		Parse.initialize(this, "5bkiaqUQfGNuyF46iQGG3gUsTX3tMA9vufPT02J3", "ko6ZAHYOHSEasTb78JzmnEemNdJWACkSXfYru3fg");
 		
 		

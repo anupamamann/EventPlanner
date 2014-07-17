@@ -1,5 +1,6 @@
 package com.android.apps.eventplanner.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.android.apps.eventplanner.utils.Constants.FoodType;
@@ -7,13 +8,17 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 
-public class Food{
-
+public class Food implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6313017006450024092L;
 	private String title;
 	private String image;	 
 	private String description;
 	private int id; 
 	private FoodType type;
+	
 	
 	public Food(){
 		super();

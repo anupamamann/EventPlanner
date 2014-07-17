@@ -18,8 +18,8 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-@ParseClassName("FoodMenu")
-public class FoodMenu extends ParseObject implements Serializable {
+
+public class FoodMenu implements Serializable {
 	
 	/**
 	 * 
