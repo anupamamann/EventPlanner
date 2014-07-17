@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvPlayListTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PlayList" />
+
+    <ListView
+        android:id="@+id/lvPlayList"
+        android:layout_width="wrap_content"
+        android:layout_height="393dp" >
+    </ListView>
+
+    <Button
+        android:id="@+id/btCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.96"
+        android:onClick="createPlaylist"
+        android:text="createPlaylist" />
+
+</LinearLayout>

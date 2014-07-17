@@ -33,10 +33,11 @@
             android:label="@string/title_activity_todo">
         </activity>
         <activity android:name="com.android.apps.eventplanner.EventRecomendationActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+          <!--    <intent-filter>
+              <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+           -->
         </activity>
         <activity android:name="com.android.apps.eventplanner.CategoryActivity" >
         </activity>
@@ -69,6 +70,28 @@
             android:name="com.android.apps.eventplanner.TestActivity"
             android:label="@string/title_activity_test" >
         </activity>
+          <activity
+            android:name="com.android.apps.eventplanner.MusicActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="callback"
+                    android:scheme="uniq"/>
+            </intent-filter>
+            
+        </activity>
+        
     </application>
 
 </manifest>
