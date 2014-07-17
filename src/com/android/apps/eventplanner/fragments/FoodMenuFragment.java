@@ -168,31 +168,26 @@ public class FoodMenuFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
 		mMenu = menu;
-
-		inflater.inflate(R.menu.menu_todo, menu);
+		inflater.inflate(R.menu.menu_univ, menu);
 	}
 
 
 	@Override
 
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// handle item selection
-		switch (item.getItemId()) {
-		case R.id.miAdd:
-			//Toast.makeText(getActivity(), "Open create dialog", Toast.LENGTH_SHORT).show();
-			//
-
-			//disable Add button
-			if(mMenu != null){
-				mMenu.findItem(R.id.miAdd).setVisible(false);
-			}
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
-
-
+	   // handle item selection
+	   switch (item.getItemId()) {
+	      case R.id.miCreateNewEvent:
+	          Toast.makeText(getActivity(), "Open create dialog", Toast.LENGTH_SHORT).show();
+	          //
+	          
+	          //disable Add button
+	          if(mMenu != null){
+	        	  mMenu.findItem(R.id.miCreateNewEvent).setVisible(false);
+	          }
+	         return true;
+	      default:
+	         return super.onOptionsItemSelected(item);
+	   }
 
 }

@@ -49,7 +49,7 @@ public class EventTypeArrayAdapter extends ArrayAdapter<EventRecommendation> {
 				String eventType = (String)v.getContentDescription();
 				
 				//call activity to generate event to-do list 
-				Intent intent = new Intent(getContext(), ItemDetailActivity.class);
+				Intent intent = new Intent(getContext(), TodoActivity.class);
 				intent.putExtra(Constants.EVENT_TYPE, eventType.toString());
 				getContext().startActivity(intent);
 				

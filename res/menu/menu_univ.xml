@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/miSavedEvents"
-        android:icon="@drawable/ic_saved_events"
+        android:icon="@drawable/ic_addtoevent"
         android:showAsAction="ifRoom"
-        android:onClick="onSavedEvents"
-        android:title="Saved" />
+        android:onClick="onSave"
+        android:title="Save" />
     
     <item 
         android:id="@+id/miCreateNewEvent"

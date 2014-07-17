@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import com.android.apps.eventplanner.EventApplication;
 import com.android.apps.eventplanner.R;
+import com.android.apps.eventplanner.VenueActivity;
 import com.android.apps.eventplanner.VenueListArrayAdapter;
 import com.android.apps.eventplanner.models.Venue;
 import com.android.apps.eventplanner.utils.GoogleClient;
+import com.android.apps.eventplanner.utils.Constants.EventType;
 
 public class ListViewFragment extends Fragment {
 	ArrayList<Venue> venues;
@@ -65,7 +67,8 @@ public class ListViewFragment extends Fragment {
 	
 	private void populatePhotos(List<String> venuePhotoUrls) {
 		GoogleClient gClient = EventApplication.getClient();
-		gClient.getImages(venuePhotoUrls);
+		EventType query = ((VenueActivity) context).getEventType();
+		gClient.getImages(venuePhotoUrls, query);
 	}
 
 }

@@ -22,11 +22,13 @@ import android.view.ViewGroup;
 
 import com.android.apps.eventplanner.EventApplication;
 import com.android.apps.eventplanner.R;
+import com.android.apps.eventplanner.VenueActivity;
 import com.android.apps.eventplanner.VenueActivity.ErrorDialogFragment;
 import com.android.apps.eventplanner.VenuePhotosDialog;
 import com.android.apps.eventplanner.VenuePhotosDialog.MapViewFragmentListener;
 import com.android.apps.eventplanner.models.TodoListItem.Type;
 import com.android.apps.eventplanner.models.Venue;
+import com.android.apps.eventplanner.utils.Constants.EventType;
 import com.android.apps.eventplanner.utils.GoogleClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -37,6 +39,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -52,6 +55,7 @@ public class MapViewFragment extends Fragment implements
 	private View mapView;
 	private FragmentActivity myContext;
 	private Map<Venue, Marker> venueMarkerMap;
+	private Venue selectedVenue;
 	
 	/*
 	 * Define a request code to send to Google Play services This code is
@@ -106,17 +110,17 @@ public class MapViewFragment extends Fragment implements
 
 			@Override
 			public void onInfoWindowClick(Marker m) {
-				Venue venue = new Venue(m.getTitle(), "map-address", 20);
+				selectedVenue = new Venue(m.getTitle(), "701 1st Avenue", 20);
 				VenuePhotosDialog overlay = VenuePhotosDialog
-						.newInstance(venue);
-				//MapViewFragmentListener listener = (MapViewFragmentListener) getActivity();
-				//listener.passVenue(venue);
+						.newInstance(selectedVenue);
+				MapViewFragmentListener listener = (MapViewFragmentListener) getActivity();
+				listener.passVenue(selectedVenue);
+				m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 				overlay.show(fm, "venue_pics");
-
 			}
 			
 		});
-		
+
 	}
 	
 	/*
@@ -250,8 +254,10 @@ public class MapViewFragment extends Fragment implements
 	private void setupMapMarkers(LatLng currentLocation) {
 		//display points on map
 		GoogleClient client = EventApplication.getClient();
-		client.getPlaces(Type.FOOD, "birthday party", currentLocation.latitude,
-				currentLocation.longitude, 100000, new JsonHttpResponseHandler() {
+		EventType query = ((VenueActivity) myContext).getEventType();
+		client.getPlaces(Type.FOOD, query.name().toLowerCase() + " party",
+				currentLocation.latitude, currentLocation.longitude, 100000,
+				new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject json) {
 				JSONArray placesJsonResults = null;
