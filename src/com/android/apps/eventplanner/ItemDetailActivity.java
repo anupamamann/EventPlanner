@@ -43,7 +43,7 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 	CreateEventFragment createFragment;
 	Menu menu;
 	MenuItem miSummary;
-	EventType eventType;
+	EventType eType;
 	
 	
 	public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter  {
@@ -105,10 +105,10 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_detail);
 		//getActionBar().setDisplayShowHomeEnabled(false);
-		getActionBar().setDisplayShowTitleEnabled(false);
-		View mActionBarView = getLayoutInflater().inflate(R.layout.my_action_bar, null);
-		getActionBar().setCustomView(mActionBarView);
-		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		//getActionBar().setDisplayShowTitleEnabled(false);
+		//View mActionBarView = getLayoutInflater().inflate(R.layout.my_action_bar, null);
+		//getActionBar().setCustomView(mActionBarView);
+		//getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		
 		//btAdd = (ImageButton)findViewById(R.id.btnAdd);
@@ -128,15 +128,11 @@ public class ItemDetailActivity extends FragmentActivity implements CreateEventL
 				String typeFromIntent = getIntent()
 						.getStringExtra(Constants.EVENT_TYPE);
 				if (typeFromIntent != null)
-					eventType = EventType.valueOf(typeFromIntent.toUpperCase());
-				else
-					eventType = Events.getInstance().getType();
-				Log.i("EVENT", eventType.name());
-				EventType eType = null;
-				if (typeFromIntent != null) {
 					eType = EventType.valueOf(typeFromIntent.toUpperCase());
-				}
-		
+				else
+					eType = Events.getInstance().getType();
+				Log.i("EVENT", eType.name());
+				
 		
 		//getFood for given Event
 			
